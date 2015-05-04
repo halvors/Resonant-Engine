@@ -20,6 +20,8 @@ import nova.core.render.texture.{BlockTexture, ItemTexture}
 trait ContentLoader extends Loadable {
 	self =>
 
+	def id: String
+
 	override def preInit() = {
 		//Automated handler for registering blocks & items vars
 		for (field <- self.getClass.getDeclaredFields) {
@@ -32,14 +34,69 @@ trait ContentLoader extends Loadable {
 			if (obj != null) {
 				// Get type of object, then register it if supported
 				obj match {
-					case itemWrapper: ItemClassWrapper => field.set(self, Game.instance.itemManager.register(itemWrapper.wrapped))
-					case itemConstructor: ItemConstructorWrapper => field.set(self, Game.instance.itemManager.register(new Supplier[Item] {
-						override def get(): Item = itemConstructor.wrapped()
-					}))
-					case blockWrapper: BlockClassWrapper => field.set(self, Game.instance.blockManager.register(blockWrapper.wrapped))
-					case blockConstructor: BlockConstructorWrapper => field.set(self, Game.instance.blockManager.register(new Supplier[Block] {
-						override def get(): Block = blockConstructor.wrapped()
-					}))
+					case itemWrapper: ItemClassWrapper =>
+						if (itemWrapper.wrapped.newInstance().isInstanceOf[AutoItemTexture]) {
+							val texture = Game.instance.renderManager.registerTexture(new ItemTexture(id, itemWrapper.getID))
+							field.set(self, Game.instance.itemManager.register(new Supplier[Item] {
+								override def get(): Item = {
+									val wrapped = itemWrapper.wrapped.newInstance()
+									wrapped.asInstanceOf[AutoItemTexture].texture = texture
+									return wrapped
+								}
+							}))
+						}
+						else {
+							field.set(self, Game.instance.itemManager.register(itemWrapper.wrapped))
+						}
+					case itemConstructor: ItemConstructorWrapper =>
+						if (itemConstructor.wrapped.apply().isInstanceOf[AutoItemTexture]) {
+							val texture = Game.instance.renderManager.registerTexture(new ItemTexture(id, itemConstructor.wrapped.getID))
+							field.set(self, Game.instance.itemManager.register(new Supplier[Item] {
+								override def get(): Item = {
+									val wrapped = itemConstructor.wrapped.apply()
+									wrapped.asInstanceOf[AutoItemTexture].texture = texture
+									return wrapped
+								}
+							}))
+						}
+						else {
+							field.set(self, Game.instance.itemManager.register(new Supplier[Item] {
+								override def get(): Item = itemConstructor.wrapped()
+							}))
+						}
+
+					case blockWrapper: BlockClassWrapper =>
+						if (blockWrapper.wrapped.newInstance().isInstanceOf[AutoBlockTexture]) {
+							val texture = Game.instance.renderManager.registerTexture(new BlockTexture(id, blockWrapper.getID))
+							Game.instance.renderManager.registerTexture(new BlockTexture(id, blockWrapper.getID))
+							field.set(self, Game.instance.blockManager.register(new Supplier[Block] {
+								override def get(): Block = {
+									val wrapped = blockWrapper.wrapped.newInstance()
+									wrapped.asInstanceOf[AutoBlockTexture].texture = texture
+									return wrapped
+								}
+							}))
+						}
+						else {
+							field.set(self, Game.instance.blockManager.register(blockWrapper.wrapped))
+						}
+					case blockConstructor: BlockConstructorWrapper =>
+						if (blockConstructor.wrapped.apply().isInstanceOf[AutoBlockTexture]) {
+							val texture = Game.instance.renderManager.registerTexture(new BlockTexture(id, blockConstructor.getID))
+							Game.instance.renderManager.registerTexture(new BlockTexture(id, blockConstructor.getID))
+							field.set(self, Game.instance.blockManager.register(new Supplier[Block] {
+								override def get(): Block = {
+									val wrapped = blockConstructor.wrapped.apply()
+									wrapped.asInstanceOf[AutoBlockTexture].texture = texture
+									return wrapped
+								}
+							}))
+						}
+						else {
+							field.set(self, Game.instance.blockManager.register(new Supplier[Block] {
+								override def get(): Block = blockConstructor.wrapped
+							}))
+						}
 					case factory: EntityClassWrapper => field.set(self, Game.instance.entityManager.register(factory))
 					case factory: EntityConstructorWrapper => field.set(self, Game.instance.entityManager.register(factory))
 					case itemTexture: ItemTexture => field.set(self, Game.instance.renderManager.registerTexture(itemTexture))
@@ -55,19 +112,19 @@ trait ContentLoader extends Loadable {
 	 * Creates a dummy instances temporarily until the preInit stage has passed
 	 */
 	implicit protected class BlockClassWrapper(val wrapped: Class[_ <: Block]) extends Block {
-		override def getID: String = ""
+		override def getID: String = wrapped.newInstance().getID
 	}
 
 	implicit protected class BlockConstructorWrapper(val wrapped: () => Block) extends Block {
-		override def getID: String = ""
+		override def getID: String = wrapped.apply().getID
 	}
 
 	implicit protected class ItemClassWrapper(val wrapped: Class[_ <: Item]) extends Item {
-		override def getID: String = ""
+		override def getID: String = wrapped.newInstance().getID
 	}
 
 	implicit protected class ItemConstructorWrapper(val wrapped: () => Item) extends Item {
-		override def getID: String = ""
+		override def getID: String = wrapped.apply().getID
 	}
 
 	implicit protected class EntityClassWrapper(val wrapped: Class[_ <: Entity]) extends EntityFactory(new Supplier[Entity] {

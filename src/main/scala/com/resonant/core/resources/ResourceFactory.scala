@@ -21,6 +21,9 @@ import nova.core.render.texture.{BlockTexture, ItemTexture}
  * @author Calclavia
  */
 object ResourceFactory extends ContentLoader {
+
+	override def id: String = Reference.id
+
 	val oreForeground = new BlockTexture(Reference.id, "oreForeground")
 	val oreBackground = new BlockTexture(Reference.id, "oreBackground")
 	val ingot = new ItemTexture(Reference.id, "ingot")

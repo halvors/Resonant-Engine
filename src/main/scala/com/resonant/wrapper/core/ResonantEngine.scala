@@ -21,6 +21,8 @@ import nova.core.render.texture.{BlockTexture, ItemTexture}
 @NovaMod(id = Reference.id, name = Reference.name, version = Reference.version, novaVersion = "0.0.1")
 object ResonantEngine extends ContentLoader {
 
+	override def id: String = Reference.id
+
 	val blockCreativeBuilder: Block = classOf[BlockCreativeBuilder]
 	val itemScrewdriver: Item = classOf[ItemScrewdriver]
 
