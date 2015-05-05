@@ -5,6 +5,7 @@ import java.util.function.{Function => JFunction}
 import nova.core.block.{Block, BlockFactory}
 import nova.core.entity.{Entity, EntityFactory}
 import nova.core.game.Game
+import nova.core.gui.Gui
 import nova.core.item.{Item, ItemFactory}
 import nova.core.loader.Loadable
 import nova.core.render.model.ModelProvider
@@ -98,6 +99,7 @@ trait ContentLoader extends Loadable {
 					case itemTexture: ItemTexture => field.set(self, Game.instance.renderManager.registerTexture(itemTexture))
 					case blockTexture: BlockTexture => field.set(self, Game.instance.renderManager.registerTexture(blockTexture))
 					case modelProvider: ModelProvider => field.set(self, Game.instance.renderManager.registerModel(modelProvider))
+					case gui: Gui => Game.instance.guiFactory.registerGui(gui, id)
 					case _ =>
 				}
 			}

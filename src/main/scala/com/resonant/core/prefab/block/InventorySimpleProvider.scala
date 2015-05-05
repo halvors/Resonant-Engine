@@ -12,7 +12,7 @@ import scala.collection.convert.wrapAll._
  */
 trait InventorySimpleProvider extends SidedInventoryProvider {
 
-	protected val inventory: Inventory
+	val inventory: Inventory
 
 	override def getInventory(side: Direction): util.Set[Inventory] = Set(inventory)
 }
