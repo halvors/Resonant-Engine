@@ -27,8 +27,8 @@ class StructureCustom(val name: String) extends Structure with Storable {
 	override def getBlockStructure: Map[Vector3i, Block] = {
 		val matrix = new MatrixStack().translate(translate).scale(scale).rotate(rotation).getMatrix
 		return structure
-			.filter(kv => Game.instance.blockManager.getBlock(kv._2).isPresent)
-			.map(e => (e._1.transform(matrix), Game.instance.blockManager.getBlock(e._2).get()))
+			.filter(kv => Game.instance.blockManager.get(kv._2).isPresent)
+			.map(e => (e._1.transform(matrix), Game.instance.blockManager.get(e._2).get()))
 	}
 
 	override def load(data: Data) {
