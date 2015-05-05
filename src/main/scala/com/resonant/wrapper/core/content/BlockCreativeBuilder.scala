@@ -38,7 +38,7 @@ class BlockCreativeBuilder extends Block with Rotatable with PacketHandler with 
 			val buildMap = BlockCreativeBuilder.schematics(schematicID).getBlockStructure
 			buildMap.foreach(kv => {
 				val placement = position + kv._1
-				blockAccess.setBlock(placement, kv._2)
+				world.setBlock(placement, kv._2)
 			})
 		}
 	}

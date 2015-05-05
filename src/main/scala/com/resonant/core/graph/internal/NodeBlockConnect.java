@@ -2,10 +2,10 @@ package com.resonant.core.graph.internal;
 
 import com.resonant.core.graph.api.NodeProvider;
 import nova.core.block.Block;
-import nova.core.block.BlockAccess;
 import nova.core.util.Direction;
 import nova.core.util.exception.NovaException;
 import nova.core.util.transform.Vector3i;
+import nova.core.world.World;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 /**
  * A node that connects to adjacent blocks.
- *
  * @author Calclavia
  */
 public class NodeBlockConnect<N extends Node<?>> extends NodeConnect<N> {
@@ -34,13 +33,17 @@ public class NodeBlockConnect<N extends Node<?>> extends NodeConnect<N> {
 
 		Map<Direction, Optional<Block>> adjacentBlocks = adjacentBlocks();
 
-		Map<Direction, N> adjacentNodes = adjacentBlocks.entrySet().stream()
+		Map<Direction, N> adjacentNodes = adjacentBlocks
+			.entrySet()
+			.stream()
 			.filter(entry -> entry.getValue().isPresent())
 			.filter(entry -> entry.getValue().get().getClass().isAssignableFrom(compareClass()))
 			.collect(Collectors.toMap(Map.Entry::getKey, entry -> getNodeFromBlock(entry.getValue().get(), entry.getKey())));
 
 		//Generates a map of connections and their directions
-		connectedMap = adjacentNodes.entrySet().stream()
+		connectedMap = adjacentNodes
+			.entrySet()
+			.stream()
 			.filter(entry -> canConnect(entry.getValue(), entry.getKey()))
 			.filter(entry -> ((NodeConnect) entry.getValue()).canConnect((N) this, entry.getKey().opposite()))
 			.collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
@@ -53,7 +56,7 @@ public class NodeBlockConnect<N extends Node<?>> extends NodeConnect<N> {
 
 	protected Map<Direction, Optional<Block>> adjacentBlocks() {
 		return Arrays.stream(Direction.DIRECTIONS)
-			.collect(Collectors.toMap(Function.identity(), dir -> blockAccess().getBlock(position().add(dir.toVector()))));
+					 .collect(Collectors.toMap(Function.identity(), dir -> world().getBlock(position().add(dir.toVector()))));
 	}
 
 	protected N getNodeFromBlock(Block block, Direction from) {
@@ -64,9 +67,9 @@ public class NodeBlockConnect<N extends Node<?>> extends NodeConnect<N> {
 		return null;
 	}
 
-	public BlockAccess blockAccess() {
+	public World world() {
 		if (parent instanceof Block) {
-			return ((Block) parent).blockAccess();
+			return ((Block) parent).world();
 		}
 		throw new NovaException("NodeProvider type not supported.");
 	}
