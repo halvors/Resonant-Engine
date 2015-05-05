@@ -2,7 +2,7 @@ package com.resonant.core.prefab.itemblock
 
 import java.util.Optional
 
-import nova.core.block.Block
+import nova.core.block.{Block, BlockFactory}
 import nova.core.retention.{Data, Storable}
 import nova.core.util.transform.Vector3i
 import nova.core.world.World
@@ -12,7 +12,7 @@ import nova.core.world.World
  *
  * @author Calclavia
  */
-class ItemBlockSaved(block: Block) extends ItemBlockTooltip(block) with Storable {
+class ItemBlockSaved(blockFactory: BlockFactory) extends ItemBlockTooltip(blockFactory) with Storable {
 
 	var data: Data = new Data
 

@@ -3,7 +3,7 @@ package com.resonant.core.structure
 import java.util.Optional
 
 import com.google.common.math.DoubleMath
-import nova.core.block.Block
+import nova.core.block.BlockFactory
 import nova.core.util.Identifiable
 import nova.core.util.transform.{MatrixStack, Quaternion, Vector3d, Vector3i}
 
@@ -26,7 +26,7 @@ abstract class Structure extends Identifiable {
 	@BeanProperty
 	var rotation = Quaternion.identity
 	@BeanProperty
-	var block = Optional.empty[Block]()
+	var blockFactory = Optional.empty[BlockFactory]()
 	/**
 	 * A mapper that acts as a custom transformation function
 	 */
@@ -56,12 +56,12 @@ abstract class Structure extends Identifiable {
 	def getExteriorStructure: Set[Vector3i] = getStructure(surfaceEquation)
 
 	def getInteriorStructure: Set[Vector3i] = getStructure(volumeEquation)
-	
-	def getBlockStructure: Map[Vector3i, Block] = {
+
+	def getBlockStructure: Map[Vector3i, BlockFactory] = {
 		//TODO: Should be exterior?
 		return getExteriorStructure
-			.filter(getBlock(_).isPresent)
-			.map(v => (v, getBlock(v).get()))
+			.filter(getBlockFactory(_).isPresent)
+			.map(v => (v, getBlockFactory(v).get()))
 			.toMap
 	}
 
@@ -90,7 +90,7 @@ abstract class Structure extends Identifiable {
 	 * @param position
 	 * @return
 	 */
-	def getBlock(position: Vector3i): Optional[Block] = block
+	def getBlockFactory(position: Vector3i): Optional[BlockFactory] = blockFactory
 
 	/**
 	 * Checks if this world position is within this structure. 

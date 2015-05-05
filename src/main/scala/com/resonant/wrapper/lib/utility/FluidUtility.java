@@ -108,11 +108,11 @@ public class FluidUtility {
 	 * @return The amount of fluid used.
 	 */
 	public static int fillBlock(World world, Vector3i pos, Fluid fluid, boolean doFill) {
-		if (fluid.amount() >= Fluid.bucketVolume && fluid.getBlock().isPresent()) {
+		if (fluid.amount() >= Fluid.bucketVolume && fluid.getBlockFactory().isPresent()) {
 			Optional<Block> block = world.getBlock(pos);
 			if (!block.isPresent()) {
 				if (doFill) {
-					world.setBlock(pos, (Block) fluid.getBlock().get());
+					world.setBlock(pos, fluid.getBlockFactory().get());
 				}
 				return Fluid.bucketVolume;
 			} else {

@@ -1,11 +1,11 @@
 package com.resonant.core.prefab.modcontent
 
-import java.util.function.Supplier
+import java.util.function.{Function => JFunction}
 
-import nova.core.block.Block
+import nova.core.block.{Block, BlockFactory}
 import nova.core.entity.{Entity, EntityFactory}
 import nova.core.game.Game
-import nova.core.item.Item
+import nova.core.item.{Item, ItemFactory}
 import nova.core.loader.Loadable
 import nova.core.render.model.ModelProvider
 import nova.core.render.texture.{BlockTexture, ItemTexture}
@@ -32,13 +32,13 @@ trait ContentLoader extends Loadable {
 			val obj = field.get(self)
 
 			if (obj != null) {
-				// Get type of object, then register it if supported
+				// Get type of AnyRef, then register it if supported
 				obj match {
 					case itemWrapper: ItemClassWrapper =>
 						if (itemWrapper.wrapped.newInstance().isInstanceOf[AutoItemTexture]) {
 							val texture = Game.instance.renderManager.registerTexture(new ItemTexture(id, itemWrapper.getID))
-							field.set(self, Game.instance.itemManager.register(new Supplier[Item] {
-								override def get(): Item = {
+							field.set(self, Game.instance.itemManager.register(new JFunction[Array[AnyRef], Item] {
+								override def apply(args: Array[AnyRef]): Item = {
 									val wrapped = itemWrapper.wrapped.newInstance()
 									wrapped.asInstanceOf[AutoItemTexture].texture = texture
 									return wrapped
@@ -51,8 +51,8 @@ trait ContentLoader extends Loadable {
 					case itemConstructor: ItemConstructorWrapper =>
 						if (itemConstructor.wrapped.apply().isInstanceOf[AutoItemTexture]) {
 							val texture = Game.instance.renderManager.registerTexture(new ItemTexture(id, itemConstructor.wrapped.getID))
-							field.set(self, Game.instance.itemManager.register(new Supplier[Item] {
-								override def get(): Item = {
+							field.set(self, Game.instance.itemManager.register(new JFunction[Array[AnyRef], Item] {
+								override def apply(args: Array[AnyRef]): Item = {
 									val wrapped = itemConstructor.wrapped.apply()
 									wrapped.asInstanceOf[AutoItemTexture].texture = texture
 									return wrapped
@@ -60,17 +60,15 @@ trait ContentLoader extends Loadable {
 							}))
 						}
 						else {
-							field.set(self, Game.instance.itemManager.register(new Supplier[Item] {
-								override def get(): Item = itemConstructor.wrapped()
-							}))
+							field.set(self, Game.instance.itemManager.register(itemConstructor))
 						}
 
 					case blockWrapper: BlockClassWrapper =>
 						if (blockWrapper.wrapped.newInstance().isInstanceOf[AutoBlockTexture]) {
 							val texture = Game.instance.renderManager.registerTexture(new BlockTexture(id, blockWrapper.getID))
 							Game.instance.renderManager.registerTexture(new BlockTexture(id, blockWrapper.getID))
-							field.set(self, Game.instance.blockManager.register(new Supplier[Block] {
-								override def get(): Block = {
+							field.set(self, Game.instance.blockManager.register(new JFunction[Array[AnyRef], Block] {
+								override def apply(args: Array[AnyRef]): Block = {
 									val wrapped = blockWrapper.wrapped.newInstance()
 									wrapped.asInstanceOf[AutoBlockTexture].texture = texture
 									return wrapped
@@ -84,8 +82,8 @@ trait ContentLoader extends Loadable {
 						if (blockConstructor.wrapped.apply().isInstanceOf[AutoBlockTexture]) {
 							val texture = Game.instance.renderManager.registerTexture(new BlockTexture(id, blockConstructor.getID))
 							Game.instance.renderManager.registerTexture(new BlockTexture(id, blockConstructor.getID))
-							field.set(self, Game.instance.blockManager.register(new Supplier[Block] {
-								override def get(): Block = {
+							field.set(self, Game.instance.blockManager.register(new JFunction[Array[AnyRef], Block] {
+								override def apply(args: Array[AnyRef]): Block = {
 									val wrapped = blockConstructor.wrapped.apply()
 									wrapped.asInstanceOf[AutoBlockTexture].texture = texture
 									return wrapped
@@ -93,9 +91,7 @@ trait ContentLoader extends Loadable {
 							}))
 						}
 						else {
-							field.set(self, Game.instance.blockManager.register(new Supplier[Block] {
-								override def get(): Block = blockConstructor.wrapped
-							}))
+							field.set(self, Game.instance.blockManager.register(blockConstructor))
 						}
 					case factory: EntityClassWrapper => field.set(self, Game.instance.entityManager.register(factory))
 					case factory: EntityConstructorWrapper => field.set(self, Game.instance.entityManager.register(factory))
@@ -111,28 +107,28 @@ trait ContentLoader extends Loadable {
 	/**
 	 * Creates a dummy instances temporarily until the preInit stage has passed
 	 */
-	implicit protected class BlockClassWrapper(val wrapped: Class[_ <: Block]) extends Block {
-		override def getID: String = wrapped.newInstance().getID
-	}
-
-	implicit protected class BlockConstructorWrapper(val wrapped: () => Block) extends Block {
-		override def getID: String = wrapped.apply().getID
-	}
-
-	implicit protected class ItemClassWrapper(val wrapped: Class[_ <: Item]) extends Item {
-		override def getID: String = wrapped.newInstance().getID
-	}
-
-	implicit protected class ItemConstructorWrapper(val wrapped: () => Item) extends Item {
-		override def getID: String = wrapped.apply().getID
-	}
-
-	implicit protected class EntityClassWrapper(val wrapped: Class[_ <: Entity]) extends EntityFactory(new Supplier[Entity] {
-		override def get(): Entity = wrapped.newInstance()
+	implicit protected class BlockClassWrapper(val wrapped: Class[_ <: Block]) extends BlockFactory(new JFunction[Array[AnyRef], Block] {
+		override def apply(args: Array[AnyRef]): Block = wrapped.newInstance()
 	})
 
-	implicit protected class EntityConstructorWrapper(val wrapped: () => Entity) extends EntityFactory(new Supplier[Entity] {
-		override def get(): Entity = wrapped()
+	implicit protected class BlockConstructorWrapper(val wrapped: () => Block) extends BlockFactory(new JFunction[Array[AnyRef], Block] {
+		override def apply(args: Array[AnyRef]): Block = wrapped()
+	})
+
+	implicit protected class ItemClassWrapper(val wrapped: Class[_ <: Item]) extends ItemFactory(new JFunction[Array[AnyRef], Item] {
+		override def apply(args: Array[AnyRef]): Item = wrapped.newInstance()
+	})
+
+	implicit protected class ItemConstructorWrapper(val wrapped: () => Item) extends ItemFactory(new JFunction[Array[AnyRef], Item] {
+		override def apply(args: Array[AnyRef]): Item = wrapped()
+	})
+
+	implicit protected class EntityClassWrapper(val wrapped: Class[_ <: Entity]) extends EntityFactory(new JFunction[Array[AnyRef], Entity] {
+		override def apply(args: Array[AnyRef]): Entity = wrapped.newInstance()
+	})
+
+	implicit protected class EntityConstructorWrapper(val wrapped: () => Entity) extends EntityFactory(new JFunction[Array[AnyRef], Entity] {
+		override def apply(args: Array[AnyRef]): Entity = wrapped()
 	})
 
 }

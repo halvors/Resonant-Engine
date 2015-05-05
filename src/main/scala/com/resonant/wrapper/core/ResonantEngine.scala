@@ -6,11 +6,11 @@ import com.resonant.core.graph.internal.thermal.GridThermal
 import com.resonant.core.prefab.modcontent.ContentLoader
 import com.resonant.core.resources.ResourceFactory
 import com.resonant.wrapper.core.content.{BlockCreativeBuilder, GuiCreativeBuilder, ItemScrewdriver}
-import nova.core.block.Block
+import nova.core.block.BlockFactory
 import nova.core.event.EventListener
 import nova.core.event.EventManager.EmptyEvent
 import nova.core.game.Game
-import nova.core.item.Item
+import nova.core.item.ItemFactory
 import nova.core.loader.NovaMod
 import nova.core.render.texture.{BlockTexture, ItemTexture}
 
@@ -23,8 +23,8 @@ object ResonantEngine extends ContentLoader {
 
 	override def id: String = Reference.id
 
-	val blockCreativeBuilder: Block = classOf[BlockCreativeBuilder]
-	val itemScrewdriver: Item = classOf[ItemScrewdriver]
+	val blockCreativeBuilder: BlockFactory = classOf[BlockCreativeBuilder]
+	val itemScrewdriver: ItemFactory = classOf[ItemScrewdriver]
 
 	val textureCreativeBuilder = new BlockTexture(Reference.id, "creativeBuilder")
 	val textureScrewdriver = new ItemTexture(Reference.id, "screwdriver")

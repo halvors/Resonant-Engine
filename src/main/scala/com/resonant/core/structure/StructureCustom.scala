@@ -2,7 +2,7 @@ package com.resonant.core.structure
 
 import java.util
 
-import nova.core.block.Block
+import nova.core.block.BlockFactory
 import nova.core.game.Game
 import nova.core.retention.{Data, Storable}
 import nova.core.util.transform.{MatrixStack, Vector3d, Vector3i}
@@ -24,11 +24,11 @@ class StructureCustom(val name: String) extends Structure with Storable {
 		return getBlockStructure.keySet
 	}
 
-	override def getBlockStructure: Map[Vector3i, Block] = {
+	override def getBlockStructure: Map[Vector3i, BlockFactory] = {
 		val matrix = new MatrixStack().translate(translate).scale(scale).rotate(rotation).getMatrix
 		return structure
 			.filter(kv => Game.instance.blockManager.get(kv._2).isPresent)
-			.map(e => (e._1.transform(matrix), Game.instance.blockManager.get(e._2).get()))
+			.map(e => (e._1.transform(matrix), Game.instance.blockManager.getFactory(e._2).get()))
 	}
 
 	override def load(data: Data) {
