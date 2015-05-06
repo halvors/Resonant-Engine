@@ -5,9 +5,9 @@ import com.resonant.core.graph.internal.electric.NodeElectricComponent
 import com.resonant.core.graph.internal.thermal.GridThermal
 import com.resonant.core.prefab.modcontent.ContentLoader
 import com.resonant.core.resources.ResourceFactory
+import com.resonant.lib.wrapper.WrapFunctions._
 import com.resonant.wrapper.core.content.{BlockCreativeBuilder, GuiCreativeBuilder, ItemScrewdriver}
 import nova.core.block.BlockFactory
-import nova.core.event.EventListener
 import nova.core.event.EventManager.EmptyEvent
 import nova.core.game.Game
 import nova.core.item.ItemFactory
@@ -40,9 +40,7 @@ object ResonantEngine extends ContentLoader {
 		/**
 		 * Register events 
 		 */
-		Game.instance.eventManager.serverStopping.add(new EventListener[EmptyEvent] {
-			override def onEvent(event: EmptyEvent): Unit = serverStopped()
-		})
+		Game.instance.eventManager.serverStopping.add((evt: EmptyEvent) => serverStopped())
 
 		Game.instance.threadTicker.add(GridThermal)
 
