@@ -9,6 +9,7 @@ import nova.core.util.transform.{MatrixStack, Quaternion, Vector3d, Vector3i}
 
 import scala.beans.BeanProperty
 import scala.collection.parallel
+import scala.collection.parallel.ParSet
 
 /**
  * Defines a 3D structure.
@@ -19,6 +20,8 @@ abstract class Structure extends Identifiable {
 	//The error allowed in fuzzy comparisons
 	@BeanProperty
 	var error = 0.001
+	@BeanProperty
+	var stepSize = 1.0
 	@BeanProperty
 	var translate = Vector3d.zero
 	@BeanProperty
@@ -44,13 +47,12 @@ abstract class Structure extends Identifiable {
 	 * Do a search within an appropriate region by generating a search set.
 	 */
 	def searchSpace: parallel.ParIterable[Vector3d] = {
-		var search = Set.empty[Vector3d]
+		var search = ParSet.empty[Vector3d]
 
-		//TODO: add these using par streams?
-		for (x <- -scale.x / 2 to scale.x / 2 by 0.5; y <- -scale.y / 2 to scale.y / 2 by 0.5; z <- -scale.z / 2 to scale.z / 2 by 0.5) {
+		for (x <- -scale.x / 2 to scale.x / 2 by stepSize; y <- -scale.y / 2 to scale.y / 2 by stepSize; z <- -scale.z / 2 to scale.z / 2 by stepSize) {
 			search += new Vector3d(x, y, z)
 		}
-		return search.view.par
+		return search
 	}
 
 	def getExteriorStructure: Set[Vector3i] = getStructure(surfaceEquation)
@@ -67,7 +69,7 @@ abstract class Structure extends Identifiable {
 
 	protected def getStructure(equation: (Vector3d) => Double): Set[Vector3i] = {
 		//TODO: Use negate matrix
-		val rotationMatrix = new MatrixStack().rotate(rotation).getMatrix
+		val transformMatrix = new MatrixStack().rotate(rotation).scale(scale).getMatrix.reciprocal()
 
 		/**
 		 * The equation has default transformations.
@@ -75,7 +77,7 @@ abstract class Structure extends Identifiable {
 		 */
 		val structure = searchSpace
 			.collect(preMapper)
-			.filter(v => DoubleMath.fuzzyEquals(equation(v.transform(rotationMatrix).divide(scale)), 0, error))
+			.filter(v => DoubleMath.fuzzyEquals(equation(v.transform(transformMatrix)), 0, error))
 			.map(_ + translate)
 			.map(_.toInt)
 			.collect(postMapper)

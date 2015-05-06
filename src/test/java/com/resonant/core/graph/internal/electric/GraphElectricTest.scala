@@ -3,6 +3,7 @@ package com.resonant.core.graph.internal.electric
 import java.util
 
 import com.resonant.core.graph.api.NodeElectric
+import com.resonant.wrapper.core.debug.Profiler
 import nova.core.util.Direction
 import org.junit.Assert._
 import org.junit.Test
@@ -391,24 +392,6 @@ class GraphElectricTest {
 		override def connections(): util.Set[NodeElectric] = connectedMap.keySet()
 	}
 
-	class Profiler(val name: String) {
-		var time = System.currentTimeMillis()
-		var lapped = Seq.empty[Long]
 
-		def delta = System.currentTimeMillis() - time
-
-		def lap() {
-			lapped :+= delta
-			time = System.currentTimeMillis()
-		}
-
-		override def toString = name + " took " + ((System.currentTimeMillis() - time) / 1000d) + " seconds"
-
-		def average = lapped.map(_ / 1000d).sum / lapped.size
-
-		def printAverage(): Unit = {
-			println(name + " took " + average + " seconds on average for " + lapped.size + " trials.")
-		}
-	}
 
 }
