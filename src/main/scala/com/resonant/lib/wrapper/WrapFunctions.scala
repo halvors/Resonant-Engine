@@ -3,6 +3,8 @@ package com.resonant.lib.wrapper
 import java.util.function._
 
 import nova.core.event.EventListener
+import nova.core.gui.ComponentEvent.ComponentEventListener
+import nova.core.gui.{ComponentEvent, GuiComponent}
 
 /**
  * Implicitly converts Scala methods to Java methods.
@@ -187,5 +189,9 @@ object WrapFunctions {
 	//NOVA
 	implicit def eventListener[T](f: T => Unit): EventListener[T] = new EventListener[T] {
 		def onEvent(t: T) = f(t)
+	}
+
+	implicit def eventListener[EVENT <: ComponentEvent, O <: GuiComponent[_, _]](f: (EVENT, O) => Unit): ComponentEventListener[EVENT, O] = new ComponentEventListener[EVENT, O] {
+		override def onEvent(event: EVENT, component: O) = f(event, component)
 	}
 }
