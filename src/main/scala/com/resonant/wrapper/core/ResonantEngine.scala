@@ -1,7 +1,5 @@
 package com.resonant.wrapper.core
 
-import com.resonant.core.graph.api.{NodeElectric, NodeRegistry}
-import com.resonant.core.graph.internal.electric.NodeElectricComponent
 import com.resonant.core.graph.internal.thermal.GridThermal
 import com.resonant.core.prefab.modcontent.ContentLoader
 import com.resonant.core.resources.ResourceFactory
@@ -21,13 +19,12 @@ import nova.core.render.texture.{BlockTexture, ItemTexture}
 @NovaMod(id = Reference.id, name = Reference.name, version = Reference.version, novaVersion = "0.0.1")
 object ResonantEngine extends ContentLoader {
 
-	override def id: String = Reference.id
-
 	val blockCreativeBuilder: BlockFactory = classOf[BlockCreativeBuilder]
 	val itemScrewdriver: ItemFactory = classOf[ItemScrewdriver]
-
 	val textureCreativeBuilder = new BlockTexture(Reference.id, "creativeBuilder")
 	val textureScrewdriver = new ItemTexture(Reference.id, "screwdriver")
+
+	override def id: String = Reference.id
 
 	override def preInit() {
 		super.preInit()
@@ -40,20 +37,11 @@ object ResonantEngine extends ContentLoader {
 		/**
 		 * Register events 
 		 */
-		Game.instance.eventManager.serverStopping.add((evt: EmptyEvent) => serverStopped())
+		Game.instance.eventManager.serverStopping.add((evt: EmptyEvent) => GridThermal.clear())
 
 		Game.instance.threadTicker.add(GridThermal)
 
 		ResourceFactory.preInit()
-
-		/**
-		 * Register graphs 
-		 */
-		NodeRegistry.instance.register(classOf[NodeElectric], classOf[NodeElectricComponent])
-	}
-
-	def serverStopped() {
-		GridThermal.clear()
 	}
 
 	override def postInit() {

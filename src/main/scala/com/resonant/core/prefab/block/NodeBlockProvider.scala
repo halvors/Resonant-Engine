@@ -3,8 +3,8 @@ package com.resonant.core.prefab.block
 import java.util
 import java.util.{List => JList}
 
-import com.resonant.core.graph.api.NodeProvider
-import com.resonant.core.graph.internal.{Graph, GraphProvider, Node}
+import com.calclavia.graph.api.{Node, NodeProvider}
+import com.calclavia.graph.core.base.{Graph, GraphProvider}
 import com.resonant.wrapper.core.api.tile.DebugInfo
 import nova.core.block.Block
 import nova.core.block.components.Stateful
