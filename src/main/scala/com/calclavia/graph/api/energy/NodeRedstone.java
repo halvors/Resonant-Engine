@@ -19,5 +19,10 @@ public interface NodeRedstone extends Node<NodeRedstone> {
 	/**
 	 * @return Sets the block to output Redstone energy.
 	 */
-	int setOutputEnergy();
+	void setOutputEnergy();
+
+	@Override
+	default String getID() {
+		return "redstone";
+	}
 }

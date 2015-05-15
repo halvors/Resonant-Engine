@@ -139,33 +139,6 @@ class GraphElectricTest {
 	}
 
 	/**
-	 * Connects a sequence of electric nodes in series excluding the first and last connection.
-	 */
-	def connectInSeries(series: NodeElectric*): Seq[NodeElectric] = {
-		series.zipWithIndex.foreach {
-			case (component: DummyComponent, index) =>
-				index match {
-					case 0 => component.connectPos(series(index + 1))
-					case l if l == series.size - 1 =>
-						component.connectNeg(series(index - 1))
-					case _ =>
-						component.connectNeg(series(index - 1))
-						component.connectPos(series(index + 1))
-				}
-			case (wire: DummyWire, index) =>
-				index match {
-					case 0 => wire.connect(series(index + 1))
-					case l if l == series.size - 1 =>
-						wire.connect(series(index - 1))
-					case _ =>
-						wire.connect(series(index - 1))
-						wire.connect(series(index + 1))
-				}
-		}
-		return series
-	}
-
-	/**
 	 * Graph 3.
 	 * Parallel circuit with more than one node and employing virtual junctions.
 	 * |-- -|+ ---|
@@ -240,6 +213,33 @@ class GraphElectricTest {
 		}
 
 		profiler.printAverage()
+	}
+
+	/**
+	 * Connects a sequence of electric nodes in series excluding the first and last connection.
+	 */
+	def connectInSeries(series: NodeElectric*): Seq[NodeElectric] = {
+		series.zipWithIndex.foreach {
+			case (component: DummyComponent, index) =>
+				index match {
+					case 0 => component.connectPos(series(index + 1))
+					case l if l == series.size - 1 =>
+						component.connectNeg(series(index - 1))
+					case _ =>
+						component.connectNeg(series(index - 1))
+						component.connectPos(series(index + 1))
+				}
+			case (wire: DummyWire, index) =>
+				index match {
+					case 0 => wire.connect(series(index + 1))
+					case l if l == series.size - 1 =>
+						wire.connect(series(index - 1))
+					case _ =>
+						wire.connect(series(index - 1))
+						wire.connect(series(index + 1))
+				}
+		}
+		return series
 	}
 
 	/**
@@ -392,7 +392,5 @@ class GraphElectricTest {
 
 		override def connections(): util.Set[NodeElectric] = connectedMap.keySet()
 	}
-
-
 
 }

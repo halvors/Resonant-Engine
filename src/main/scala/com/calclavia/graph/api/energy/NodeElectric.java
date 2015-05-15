@@ -1,11 +1,10 @@
 package com.calclavia.graph.api.energy;
 
 import com.calclavia.graph.api.Node;
-import nova.core.block.Block;
 
 /**
- * An electric node that acts as an electric circuit.
- * Constructor requirement: Provider (An instance of {@link Block}
+ * An abstract interface extended by NodeElectricComponent and NodeElectricJunction.
+ * This interface is NOT registered.
  * @author Calclavia
  */
 public interface NodeElectric extends Node<NodeElectric> {

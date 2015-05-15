@@ -18,7 +18,7 @@ import scala.collection.convert.wrapAll._
  *
  * @author Calclavia
  */
-class NodeElectricComponent(parent: NodeProvider) extends NodeAbstractElectric(parent) {
+class NodeElectricComponent(parent: NodeProvider) extends NodeAbstractElectric(parent) with com.calclavia.graph.api.energy.NodeElectricComponent {
 
 	/**
 	 * The current and voltage values are set are determined by the DC Grid

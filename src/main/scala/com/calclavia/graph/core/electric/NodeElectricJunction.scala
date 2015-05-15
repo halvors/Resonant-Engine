@@ -8,7 +8,7 @@ import com.calclavia.graph.core.electric.component.Junction
  * Wires will be treated as junctions and collapsed.
  * @author Calclavia
  */
-class NodeElectricJunction(parent: NodeProvider) extends NodeAbstractElectric(parent) {
+class NodeElectricJunction(parent: NodeProvider) extends NodeAbstractElectric(parent) with com.calclavia.graph.api.energy.NodeElectricJunction {
 
 	var junction: Junction = null
 
@@ -19,6 +19,4 @@ class NodeElectricJunction(parent: NodeProvider) extends NodeAbstractElectric(pa
 	override def toString: String = {
 		"ElectricJunction [" + connections.size() + ", " + BigDecimal(voltage).setScale(2, BigDecimal.RoundingMode.HALF_UP) + "V]"
 	}
-
-	override def getID: String = "electricJunction"
 }
