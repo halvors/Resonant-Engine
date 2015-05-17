@@ -4,6 +4,7 @@ import com.calclavia.graph.api.NodeManager;
 import com.calclavia.graph.api.NodeProvider;
 import com.calclavia.graph.core.electric.NodeElectricComponent;
 import com.calclavia.graph.core.electric.NodeElectricJunction;
+import com.calclavia.graph.mcwrawpper.RedstoneAPI;
 import nova.core.loader.Loadable;
 import nova.core.loader.NovaMod;
 
@@ -36,5 +37,7 @@ public class NodeAPI implements Loadable {
 				return new NodeElectricJunction(null);
 			}
 		});
+
+		(new RedstoneAPI(nodeManager)).preInit();
 	}
 }

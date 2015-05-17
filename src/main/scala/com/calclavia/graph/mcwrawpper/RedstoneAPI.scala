@@ -1,10 +1,11 @@
 package com.calclavia.graph.mcwrawpper
 
-import com.calclavia.graph.api.NodeProvider
+import com.calclavia.graph.api.{NodeManager, NodeProvider}
 import com.calclavia.graph.mcwrawpper.redstone.NodeRedstone
 import com.resonant.lib.wrapper.WrapFunctions._
 import nova.core.event.EventManager.BlockNeighborChangeEvent
 import nova.core.game.Game
+import nova.core.loader.Loadable
 import nova.core.util.Direction
 import nova.core.util.transform.Vector3i
 import nova.core.world.World
@@ -16,9 +17,19 @@ import scala.collection.convert.wrapAll._
 /**
  * @author Calclavia
  */
-class RedstoneHandler {
+//TODO: Use @ForGame("minecraft") Annotation to auto-load
+class RedstoneAPI(nodeManager: NodeManager) extends Loadable {
 
-	def init() {
+	override def preInit() {
+		//Registers Redstone Node
+		nodeManager.register((args: Array[Object]) => {
+			if (args.length > 0) {
+				new NodeRedstone(args(0).asInstanceOf[NodeProvider])
+			} else {
+				new NodeRedstone(null)
+			}
+		})
+
 		Game.instance.eventManager.blockNeighborChange.add(
 			(evt: BlockNeighborChangeEvent) => {
 				getRedstoneNodes(evt.world, evt.position).foreach(_.recache())
