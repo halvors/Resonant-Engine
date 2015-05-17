@@ -70,7 +70,7 @@ object WrapFunctions {
 		def applyAsDouble(d: Double): Double = f(d)
 	}
 
-	implicit def func[R, T](f: T => R): Function[T, R] = new Function[T, R] {
+	implicit def func[T, R](f: T => R): Function[T, R] = new Function[T, R] {
 		def apply(t: T): R = f(t)
 	}
 

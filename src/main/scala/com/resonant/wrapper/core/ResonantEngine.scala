@@ -1,12 +1,9 @@
 package com.resonant.wrapper.core
 
-import com.resonant.core.graph.internal.thermal.GridThermal
 import com.resonant.core.prefab.modcontent.ContentLoader
 import com.resonant.core.resources.ResourceFactory
-import com.resonant.lib.wrapper.WrapFunctions._
 import com.resonant.wrapper.core.content.{BlockCreativeBuilder, GuiCreativeBuilder, ItemScrewdriver}
 import nova.core.block.BlockFactory
-import nova.core.event.EventManager.EmptyEvent
 import nova.core.game.Game
 import nova.core.item.ItemFactory
 import nova.core.loader.NovaMod
@@ -33,14 +30,6 @@ object ResonantEngine extends ContentLoader {
 		 * Register GUI
 		 */
 		Game.instance.guiFactory.registerGui(new GuiCreativeBuilder, Reference.id)
-
-		/**
-		 * Register events 
-		 */
-		Game.instance.eventManager.serverStopping.add((evt: EmptyEvent) => GridThermal.clear())
-
-		Game.instance.threadTicker.add(GridThermal)
-
 		ResourceFactory.preInit()
 	}
 
