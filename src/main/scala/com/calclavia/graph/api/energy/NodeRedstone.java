@@ -11,15 +11,27 @@ import nova.core.block.Block;
  */
 public interface NodeRedstone extends Node<NodeRedstone> {
 
-	/**
-	 * @return The current Redstone energy in this block.
-	 */
-	int energy();
+	int getStrongPower();
 
 	/**
-	 * @return Sets the block to output Redstone energy.
+	 * Sets the block to output strong Redstone power.
 	 */
-	void setOutputEnergy();
+	void setStrongPower(int power);
+
+	/**
+	 * @return The current Redstone energy powered to a specific side of this block.
+	 */
+	int getWeakPower(int side);
+
+	/**
+	 * @return The greatest Redstone energy indirectly powering this block.
+	 */
+	int getWeakPower();
+
+	/**
+	 * Sets the block to output weak Redstone power.
+	 */
+	void setWeakPower(int power);
 
 	@Override
 	default String getID() {

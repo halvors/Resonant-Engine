@@ -15,6 +15,7 @@ public interface NodeProvider {
 	 * @param from - The direction.
 	 * @return Returns the node object.
 	 */
+	@Deprecated
 	default <N extends Node> N getNode(Class<? extends N> nodeType, Direction from) {
 		return getNodes(from).stream()
 			.filter(n -> nodeType.getClass().isAssignableFrom(n.getClass()))
