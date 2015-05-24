@@ -4,7 +4,7 @@ import java.util.Optional
 
 import com.resonant.core.prefab.block.Rotatable
 import com.resonant.core.structure.Structure
-import com.resonant.wrapper.core.{Reference, ResonantEngine}
+import com.resonant.wrapper.core.ResonantEngine
 import nova.core.block.Block
 import nova.core.entity.Entity
 import nova.core.game.Game
@@ -26,7 +26,7 @@ class BlockCreativeBuilder extends Block with Rotatable with PacketHandler with 
 	 * Called when the block is right clicked by the player
 	 */
 	override def onRightClick(entity: Entity, side: Int, hit: Vector3d): Boolean = {
-		Game.instance.guiFactory.showGui(Reference.id, "creativeBuilder", entity, position)
+		Game.instance.guiFactory.showGui("creativeBuilder", entity, position)
 		return true
 	}
 

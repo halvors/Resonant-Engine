@@ -7,6 +7,7 @@ import nova.core.block.{Block, BlockFactory}
 import nova.core.entity.{Entity, EntityFactory}
 import nova.core.game.Game
 import nova.core.gui.Gui
+import nova.core.gui.factory.GuiFactory
 import nova.core.item.{Item, ItemFactory}
 import nova.core.loader.Loadable
 import nova.core.render.model.ModelProvider
@@ -100,7 +101,7 @@ trait ContentLoader extends Loadable {
 					case itemTexture: ItemTexture => field.set(self, Game.instance.renderManager.registerTexture(itemTexture))
 					case blockTexture: BlockTexture => field.set(self, Game.instance.renderManager.registerTexture(blockTexture))
 					case modelProvider: ModelProvider => field.set(self, Game.instance.renderManager.registerModel(modelProvider))
-					case gui: Gui => Game.instance.guiFactory.registerGui(gui, id)
+					case guiFactory: GuiConstructorWrapper => Game.instance.guiFactory.register(guiFactory)
 					case _ =>
 				}
 			}
@@ -121,4 +122,6 @@ trait ContentLoader extends Loadable {
 	implicit protected class EntityClassWrapper(val wrapped: Class[_ <: Entity]) extends EntityFactory((args: Array[AnyRef]) => wrapped.newInstance())
 
 	implicit protected class EntityConstructorWrapper(val wrapped: () => Entity) extends EntityFactory((args: Array[AnyRef]) => wrapped())
+
+	implicit protected class GuiConstructorWrapper(val wrapped: Class[_ <: Gui]) extends GuiFactory((args: Array[AnyRef]) => wrapped.newInstance())
 }
