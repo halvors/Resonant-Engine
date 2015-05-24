@@ -5,8 +5,7 @@ import java.util.Optional
 import com.google.common.math.DoubleMath
 import nova.core.block.BlockFactory
 import nova.core.util.Identifiable
-import nova.core.util.transform.Quaternion
-import nova.core.util.transform.matrix.MatrixStack
+import nova.core.util.transform.matrix.{MatrixStack, Quaternion}
 import nova.core.util.transform.vector.{Vector3d, Vector3i}
 
 import scala.beans.BeanProperty
