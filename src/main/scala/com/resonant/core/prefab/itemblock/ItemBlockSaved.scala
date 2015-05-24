@@ -4,7 +4,7 @@ import java.util.Optional
 
 import nova.core.block.{Block, BlockFactory}
 import nova.core.retention.{Data, Storable}
-import nova.core.util.transform.Vector3i
+import nova.core.util.transform.vector.Vector3i
 import nova.core.world.World
 
 /**

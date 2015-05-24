@@ -10,7 +10,7 @@ import nova.core.entity.Entity
 import nova.core.game.Game
 import nova.core.network.{Packet, PacketHandler}
 import nova.core.render.texture.Texture
-import nova.core.util.transform.Vector3d
+import nova.core.util.transform.vector.Vector3d
 import nova.core.util.{Category, Direction}
 
 object BlockCreativeBuilder {

@@ -1,7 +1,7 @@
 package com.resonant.core.structure
 
 import nova.core.block.Block
-import nova.core.util.transform.Vector3d
+import nova.core.util.transform.vector.Vector3d
 
 /**
  * Creates a flat plane surface

@@ -4,7 +4,7 @@ import com.resonant.core.prefab.block.Rotatable
 import nova.core.block.Block
 import nova.core.block.components.StaticRenderer
 import nova.core.render.model.{BlockModelUtil, Model}
-import nova.core.util.transform.MatrixStack
+import nova.core.util.transform.matrix.MatrixStack
 
 /**
  * Renders a block with rotation based on its direction
