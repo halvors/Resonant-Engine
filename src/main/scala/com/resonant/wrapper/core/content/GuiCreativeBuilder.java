@@ -3,7 +3,7 @@ package com.resonant.wrapper.core.content;
 import net.minecraft.client.gui.GuiTextField;
 import nova.core.gui.ComponentEvent;
 import nova.core.gui.Gui;
-import nova.core.gui.components.Button;
+import nova.core.gui.component.Button;
 import nova.core.gui.layout.Anchor;
 
 public class GuiCreativeBuilder extends Gui {
