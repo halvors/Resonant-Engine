@@ -32,7 +32,7 @@ trait Rotatable extends Block with Stateful with Storable {
 			}
 		}
 
-		val playerSide = Math.floor(entity.rotation.toEuler.x * 4.0F / 360.0F + 0.5D).toInt & 3
+		val playerSide = Math.floor(entity.transform.rotation().toEuler.x * 4.0F / 360.0F + 0.5D).toInt & 3
 		val returnSide = if (playerSide == 0 && canRotate(2)) 2 else if (playerSide == 1 && canRotate(5)) 5 else if (playerSide == 2 && canRotate(3)) 3 else if (playerSide == 3 && canRotate(4)) 4 else 0
 
 		if (isFlipPlacement) {
@@ -41,6 +41,8 @@ trait Rotatable extends Block with Stateful with Storable {
 
 		return Direction.fromOrdinal(returnSide)
 	}
+
+	def canRotate(ord: Int): Boolean = (rotationMask & (1 << ord)) != 0
 
 	/**
 	 * Rotatable Block
@@ -201,6 +203,4 @@ trait Rotatable extends Block with Stateful with Storable {
 		}
 		return -1
 	}
-
-	def canRotate(ord: Int): Boolean = (rotationMask & (1 << ord)) != 0
 }
