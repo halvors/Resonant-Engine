@@ -1,7 +1,7 @@
 package com.resonant.wrapper.core;
 
 import nova.core.entity.Entity;
-import nova.core.player.Player;
+import nova.core.entity.component.Player;
 
 /**
  * Temporary placeholder class for methods that do not exist yet

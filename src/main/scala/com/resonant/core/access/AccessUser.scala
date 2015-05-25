@@ -1,6 +1,6 @@
 package com.resonant.core.access
 
-import nova.core.player.Player
+import nova.core.entity.component.Player
 import nova.core.retention.Stored
 
 class AccessUser(@Stored var username: String) extends AbstractAccess {

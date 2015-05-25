@@ -5,8 +5,8 @@ import java.util.Optional
 
 import com.resonant.core.energy.EnergyItem
 import com.resonant.wrapper.lib.utility.science.UnitDisplay
+import nova.core.entity.Entity
 import nova.core.item.Item
-import nova.core.player.Player
 import nova.core.retention.{Storable, Stored}
 
 /**
@@ -23,7 +23,7 @@ trait ItemEnergy extends Item with EnergyItem with Storable {
 
 	override def getMaxCount: Int = 1
 
-	override def getTooltips(player: Optional[Player], tooltips: util.List[String]) {
+	override def getTooltips(player: Optional[Entity], tooltips: util.List[String]) {
 		super.getTooltips(player, tooltips)
 
 		val color = {

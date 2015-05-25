@@ -4,10 +4,10 @@ import java.util
 import java.util.Optional
 
 import com.resonant.wrapper.lib.wrapper.StringWrapper._
+import nova.core.entity.Entity
 import nova.core.game.Game
 import nova.core.gui.KeyManager.Key
 import nova.core.item.Item
-import nova.core.player.Player
 import nova.core.render.Color
 
 /**
@@ -15,7 +15,7 @@ import nova.core.render.Color
  */
 trait TooltipItem extends Item {
 
-	override def getTooltips(player: Optional[Player], tooltips: util.List[String]) {
+	override def getTooltips(player: Optional[Entity], tooltips: util.List[String]) {
 		super.getTooltips(player, tooltips)
 		val tooltipID = getID + ".tooltip"
 		val tooltip = tooltipID.getLocal

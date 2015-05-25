@@ -3,7 +3,7 @@ package com.resonant.core.prefab.block
 import java.util
 
 import nova.core.inventory.Inventory
-import nova.core.inventory.components.SidedInventoryProvider
+import nova.core.inventory.component.SidedInventoryProvider
 import nova.core.util.Direction
 
 import scala.collection.convert.wrapAll._
