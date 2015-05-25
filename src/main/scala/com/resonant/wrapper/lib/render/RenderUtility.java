@@ -16,7 +16,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import nova.core.util.Direction;
-import nova.core.util.collection.Pair;
+import nova.core.util.collection.Tuple2;
 import nova.core.util.transform.vector.Vector3d;
 import org.lwjgl.opengl.GL11;
 
@@ -630,7 +630,7 @@ public class RenderUtility {
 	public static void rotateBlockBasedOnDirection(Direction direction) {
 		switch (direction) {
 			default:
-				Pair<Vector3d, Double> angleAxis = direction.rotation.toAngleAxis();
+				Tuple2<Vector3d, Double> angleAxis = direction.rotation.toAngleAxis();
 				glRotated(Math.toDegrees(angleAxis._2), angleAxis._1.x, angleAxis._1.y, angleAxis._1.z);
 				break;
 			case DOWN:
