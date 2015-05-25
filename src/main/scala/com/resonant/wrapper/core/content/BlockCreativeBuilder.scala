@@ -2,10 +2,10 @@ package com.resonant.wrapper.core.content
 
 import java.util.Optional
 
-import com.resonant.core.prefab.block.Rotatable
 import com.resonant.core.structure.Structure
 import com.resonant.wrapper.core.ResonantEngine
 import nova.core.block.Block
+import nova.core.block.component.Oriented
 import nova.core.entity.Entity
 import nova.core.game.Game
 import nova.core.network.{Packet, PacketHandler}
@@ -19,7 +19,7 @@ object BlockCreativeBuilder {
 
 class BlockCreativeBuilder extends Block with PacketHandler with Category {
 
-	add(new Rotatable(this).setMask(0x3F))
+	add(new Oriented(this).setMask(0x3F))
 
 	/**
 	 * Called when the block is right clicked by the player
