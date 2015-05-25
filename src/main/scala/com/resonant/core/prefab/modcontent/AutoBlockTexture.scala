@@ -13,5 +13,5 @@ import nova.core.util.Direction
 trait AutoBlockTexture extends Block {
 	var texture: Texture = null
 
-	override def getTexture(side: Direction): Optional[Texture] = Optional.of(texture)
+	def getTexture(side: Direction): Optional[Texture] = Optional.of(texture)
 }
