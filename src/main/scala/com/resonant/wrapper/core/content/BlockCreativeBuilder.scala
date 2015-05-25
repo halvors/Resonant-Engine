@@ -7,7 +7,8 @@ import com.resonant.lib.wrapper.WrapFunctions._
 import com.resonant.wrapper.core.ResonantEngine
 import nova.core.block.Block
 import nova.core.block.Block.RightClickEvent
-import nova.core.block.component.{Oriented, StaticBlockRenderer}
+import nova.core.block.component.StaticBlockRenderer
+import nova.core.component.transform.Orientation
 import nova.core.game.Game
 import nova.core.network.{Packet, PacketHandler}
 import nova.core.util.{Category, Direction}
@@ -18,7 +19,7 @@ object BlockCreativeBuilder {
 
 class BlockCreativeBuilder extends Block with PacketHandler with Category {
 
-	add(new Oriented(this).setMask(0x3F))
+	add(new Orientation(this).setMask(0x3F))
 
 	add(new StaticBlockRenderer(this).setTexture(func((dir: Direction) => Optional.of(ResonantEngine.textureCreativeBuilder))))
 
@@ -28,7 +29,7 @@ class BlockCreativeBuilder extends Block with PacketHandler with Category {
 	 * Called when the block is right clicked by the player
 	 */
 	def onRightClick(evt: RightClickEvent) {
-		Game.instance.guiFactory.showGui("creativeBuilder", evt.entity, position)
+		Game.instance.guiFactory.showGui("creativeBuilder", evt.entity, transform.position)
 		evt.result = true
 	}
 
@@ -39,7 +40,7 @@ class BlockCreativeBuilder extends Block with PacketHandler with Category {
 			val size = packet.readInt
 			val buildMap = BlockCreativeBuilder.schematics(schematicID).getBlockStructure
 			buildMap.foreach(kv => {
-				val placement = position + kv._1
+				val placement = transform.position + kv._1
 				world.setBlock(placement, kv._2)
 			})
 		}

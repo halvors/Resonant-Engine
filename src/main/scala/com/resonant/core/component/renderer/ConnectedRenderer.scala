@@ -39,7 +39,7 @@ class ConnectedRenderer(block: Block, edgeTexture: BlockTexture) extends StaticR
 
 	def sideMask: Int =
 		Direction.DIRECTIONS
-			.map(d => (d, block.world().getBlock(block.position + d.toVector)))
+			.map(d => (d, block.world().getBlock(block.transform.position + d.toVector)))
 			.filter(kv => kv._2.isPresent && kv._2.get.getID == getID)
 			.foldLeft(0)((b, a) => b | 1 << a._1.ordinal())
 }

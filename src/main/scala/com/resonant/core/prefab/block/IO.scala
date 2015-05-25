@@ -36,7 +36,7 @@ trait IO extends Block with Storable with IIO {
 			val newIO = (getIO(Direction.fromOrdinal(side)) + 1) % 3
 			setIO(Direction.fromOrdinal(side), newIO)
 			entityPlayer.addChatMessage(new ChatComponentText("Side changed to: " + (if (newIO == 0) "None" else if (newIO == 1) "Input" else "Output")))
-			world.markChange(position)
+			world.markChange(transform.position)
 		}
 		return true
 	}
