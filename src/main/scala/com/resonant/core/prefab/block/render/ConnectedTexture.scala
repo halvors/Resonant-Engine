@@ -5,7 +5,7 @@ import java.util.Optional
 import com.resonant.lib.util.RotationUtility
 import com.resonant.wrapper.lib.wrapper.BitmaskWrapper._
 import nova.core.block.Block
-import nova.core.block.components.StaticRenderer
+import nova.core.component.renderer.StaticRenderer
 import nova.core.render.model.{BlockModelUtil, Model, StaticCubeTextureCoordinates}
 import nova.core.render.texture.BlockTexture
 import nova.core.util.Direction

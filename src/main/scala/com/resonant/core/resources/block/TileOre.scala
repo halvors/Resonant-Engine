@@ -4,7 +4,7 @@ import java.util.Optional
 
 import com.resonant.core.resources.{Resource, ResourceFactory}
 import nova.core.block.Block
-import nova.core.block.components.StaticRenderer
+import nova.core.component.renderer.StaticRenderer
 import nova.core.render.Color
 import nova.core.render.model.{BlockModelUtil, Model}
 import nova.core.render.texture.Texture

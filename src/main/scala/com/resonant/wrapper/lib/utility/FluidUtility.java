@@ -4,7 +4,7 @@ import nova.core.block.Block;
 import nova.core.fluid.Fluid;
 import nova.core.fluid.FluidBlock;
 import nova.core.fluid.SidedTankProvider;
-import nova.core.fluid.Tank;
+import nova.core.fluid.component.Tank;
 import nova.core.util.Direction;
 import nova.core.util.transform.vector.Vector3i;
 import nova.core.world.World;
