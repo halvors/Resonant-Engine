@@ -19,7 +19,7 @@ class ConnectedRenderer(block: Block, edgeTexture: BlockTexture) extends StaticR
 	override def renderStatic(model: Model) {
 		//Render the block face
 		BlockModelUtil.drawBlock(model, block)
-		val opBounds = provider.get(classOf[BlockCollider])
+		val opBounds = provider.getOp(classOf[BlockCollider])
 
 		if (opBounds.isPresent) {
 			//Render the block edge
