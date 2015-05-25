@@ -6,7 +6,6 @@ import com.resonant.lib.util.RotationUtility
 import com.resonant.wrapper.lib.wrapper.BitmaskWrapper._
 import nova.core.block.Block
 import nova.core.block.component.BlockCollider
-import nova.core.component.ComponentProvider
 import nova.core.component.renderer.StaticRenderer
 import nova.core.render.model.{BlockModelUtil, Model, StaticCubeTextureCoordinates}
 import nova.core.render.texture.BlockTexture
@@ -15,11 +14,11 @@ import nova.core.util.Direction
 /**
  * A trait for blocks with connected textures.
  */
-class ConnectedRenderer(provider: ComponentProvider) extends StaticRenderer(provider) {
+class ConnectedRenderer(block: Block, edgeTexture: BlockTexture) extends StaticRenderer(block) {
 
 	override def renderStatic(model: Model) {
 		//Render the block face
-		BlockModelUtil.drawBlock(model, provider.asInstanceOf[Block])
+		BlockModelUtil.drawBlock(model, block)
 		val opBounds = provider.getComponent(classOf[BlockCollider])
 
 		if (opBounds.isPresent) {
@@ -38,11 +37,9 @@ class ConnectedRenderer(provider: ComponentProvider) extends StaticRenderer(prov
 		}
 	}
 
-	def edgeTexture: BlockTexture
-
 	def sideMask: Int =
 		Direction.DIRECTIONS
-			.map(d => (d, world.getBlock(position + d.toVector)))
+			.map(d => (d, block.world().getBlock(block.position + d.toVector)))
 			.filter(kv => kv._2.isPresent && kv._2.get.getID == getID)
 			.foldLeft(0)((b, a) => b | 1 << a._1.ordinal())
 }

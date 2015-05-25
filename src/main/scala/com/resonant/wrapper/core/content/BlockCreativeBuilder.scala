@@ -17,10 +17,9 @@ object BlockCreativeBuilder {
 	var schematics: Seq[Structure] = Seq.empty
 }
 
-class BlockCreativeBuilder extends Block with Rotatable with PacketHandler with Category {
+class BlockCreativeBuilder extends Block with PacketHandler with Category {
 
-	//Constructor
-	rotationMask = 0x3F
+	add(new Rotatable(this).setMask(0x3F))
 
 	/**
 	 * Called when the block is right clicked by the player

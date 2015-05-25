@@ -6,15 +6,9 @@ import nova.core.entity.Entity
 import nova.core.util.Direction
 import nova.core.util.transform.vector.Vector3d
 
-import scala.beans.BeanProperty
-
 class Rotatable(block: Block) extends Oriented {
 
-	var rotationMask = 0x3C
 	var isFlipPlacement = false
-
-	@BeanProperty
-	var direction = Direction.UNKNOWN
 
 	def determineRotation(entity: Entity): Direction = {
 		if (Math.abs(entity.position.x - block.x) < 2 && Math.abs(entity.position.z - block.z) < 2) {
