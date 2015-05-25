@@ -1,4 +1,4 @@
-package com.resonant.core.prefab.block.render
+package com.resonant.core.component.renderer
 
 import com.resonant.core.prefab.block.Rotatable
 import nova.core.block.Block
@@ -10,7 +10,7 @@ import nova.core.util.transform.matrix.MatrixStack
  * Renders a block with rotation based on its direction
  * @author Calclavia
  */
-trait RotatedTexture extends Block with Rotatable with StaticRenderer {
+trait RotatedRenderer extends Block with Rotatable with StaticRenderer {
 
 	override def renderStatic(model: Model) {
 		BlockModelUtil.drawBlock(model, this)

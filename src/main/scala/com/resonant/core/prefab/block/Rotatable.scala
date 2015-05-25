@@ -1,7 +1,6 @@
 package com.resonant.core.prefab.block
 
-import nova.core.block.Block
-import nova.core.block.component.Stateful
+import nova.core.block.{Block, Stateful}
 import nova.core.entity.Entity
 import nova.core.network.Sync
 import nova.core.retention.{Storable, Stored}

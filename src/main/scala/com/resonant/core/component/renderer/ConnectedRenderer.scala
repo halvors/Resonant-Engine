@@ -1,10 +1,11 @@
-package com.resonant.core.prefab.block.render
+package com.resonant.core.component.renderer
 
 import java.util.Optional
 
 import com.resonant.lib.util.RotationUtility
 import com.resonant.wrapper.lib.wrapper.BitmaskWrapper._
 import nova.core.block.Block
+import nova.core.component.ComponentProvider
 import nova.core.component.renderer.StaticRenderer
 import nova.core.render.model.{BlockModelUtil, Model, StaticCubeTextureCoordinates}
 import nova.core.render.texture.BlockTexture
@@ -13,13 +14,13 @@ import nova.core.util.Direction
 /**
  * A trait for blocks with connected textures.
  */
-trait ConnectedTexture extends Block with StaticRenderer {
+class ConnectedRenderer(provider: ComponentProvider) extends StaticRenderer(provider) {
 
 	override def renderStatic(model: Model) {
 		//Render the block face
-		BlockModelUtil.drawBlock(model, this)
+		BlockModelUtil.drawBlock(model, provider.asInstanceOf[Block])
 		//Render the block edge
-		val bounds = getBoundingBox
+		val bounds = provider.getBoundingBox
 		for (dir <- Direction.DIRECTIONS; r <- 0 until 4) {
 			if (!sideMask.mask(dir)) {
 				val absDir = Direction.fromOrdinal(RotationUtility.rotateSide(dir.ordinal, r))
