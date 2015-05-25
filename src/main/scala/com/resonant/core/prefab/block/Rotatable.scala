@@ -1,32 +1,29 @@
 package com.resonant.core.prefab.block
 
-import nova.core.block.{Block, Stateful}
+import nova.core.block.Block
+import nova.core.block.component.Oriented
 import nova.core.entity.Entity
-import nova.core.network.Sync
-import nova.core.retention.{Storable, Stored}
 import nova.core.util.Direction
 import nova.core.util.transform.vector.Vector3d
 
 import scala.beans.BeanProperty
 
-trait Rotatable extends Block with Stateful with Storable {
+class Rotatable(block: Block) extends Oriented {
 
 	var rotationMask = 0x3C
 	var isFlipPlacement = false
 
-	@Sync
-	@Stored
 	@BeanProperty
 	var direction = Direction.UNKNOWN
 
 	def determineRotation(entity: Entity): Direction = {
-		if (Math.abs(entity.position.x - x) < 2 && Math.abs(entity.position.z - z) < 2) {
+		if (Math.abs(entity.position.x - block.x) < 2 && Math.abs(entity.position.z - block.z) < 2) {
 			val d0 = entity.position.y + 1.82D //- entity.yOffset
 
-			if (canRotate(1) && d0 - y > 2.0D) {
+			if (canRotate(1) && d0 - block.y > 2.0D) {
 				return Direction.UP
 			}
-			if (canRotate(0) && y - d0 > 0.0D) {
+			if (canRotate(0) && block.y - d0 > 0.0D) {
 				return Direction.DOWN
 			}
 		}
