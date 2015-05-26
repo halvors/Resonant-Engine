@@ -17,16 +17,14 @@ import nova.core.util.Direction
 class TileOre extends Block with Resource {
 	var renderingForeground = false
 
-	add(
-		new StaticBlockRenderer(this) {
-			override def renderStatic(model: Model) {
-				renderingForeground = false
-				BlockModelUtil.drawBlock(model, TileOre.this)
-				renderingForeground = true
-				BlockModelUtil.drawBlock(model, TileOre.this)
-			}
-		}
-			.setColorMultiplier((side: Direction) => if (renderingForeground) Color.argb(ResourceFactory.getColor(material)) else Color.white)
-			.setTexture(func((side: Direction) => if (renderingForeground) Optional.of(ResourceFactory.oreForeground) else Optional.of(ResourceFactory.oreBackground)))
-	)
+	add(new StaticBlockRenderer(this))
+		.setColorMultiplier((side: Direction) => if (renderingForeground) Color.argb(ResourceFactory.getColor(material)) else Color.white)
+		.setTexture(func((side: Direction) => if (renderingForeground) Optional.of(ResourceFactory.oreForeground) else Optional.of(ResourceFactory.oreBackground)))
+		.onRender(
+	    (model: Model) => {
+		    renderingForeground = false
+		    BlockModelUtil.drawBlock(model, TileOre.this)
+		    renderingForeground = true
+		    BlockModelUtil.drawBlock(model, TileOre.this)
+	    })
 }
