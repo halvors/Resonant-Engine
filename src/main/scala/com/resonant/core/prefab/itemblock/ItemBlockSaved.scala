@@ -5,9 +5,9 @@ import java.util.Optional
 import nova.core.block.{Block, BlockFactory}
 import nova.core.entity.Entity
 import nova.core.retention.{Data, Storable}
-import nova.core.util.transform.vector.Vector3i
+import nova.core.util.Direction
+import nova.core.util.transform.vector.{Vector3d, Vector3i}
 import nova.core.world.World
-
 
 /**
  * An ItemBlock that can store its block's internal data even after the block breaks.
@@ -27,7 +27,7 @@ class ItemBlockSaved(blockFactory: BlockFactory) extends ItemBlockTooltip(blockF
 
 	override def load(data: Data): Unit = this.data = data
 
-	override protected def onPostPlace(world: World, placePos: Vector3i, entity: Entity): Boolean = {
+	override protected def onPostPlace(entity: Entity, world: World, placePos: Vector3i, side: Direction, hit: Vector3d): Boolean = {
 		val placedBlock: Optional[Block] = world.getBlock(placePos)
 
 		if (placedBlock.isPresent && placedBlock.get().isInstanceOf[Storable]) {
@@ -35,6 +35,6 @@ class ItemBlockSaved(blockFactory: BlockFactory) extends ItemBlockTooltip(blockF
 			placedBlock.get().asInstanceOf[Storable].load(data)
 		}
 
-		return super.onPostPlace(world, placePos, entity)
+		return super.onPostPlace(entity, world, placePos, side, hit)
 	}
 }
