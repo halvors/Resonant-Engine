@@ -4,7 +4,7 @@ import java.util.Optional
 
 import com.resonant.core.structure.Structure
 import com.resonant.lib.wrapper.WrapFunctions._
-import com.resonant.wrapper.core.ResonantEngine
+import com.resonant.wrapper.core.{Content, ResonantEngine}
 import nova.core.block.Block
 import nova.core.block.Block.RightClickEvent
 import nova.core.block.component.StaticBlockRenderer
@@ -21,7 +21,7 @@ class BlockCreativeBuilder extends Block with PacketHandler with Category {
 
 	add(new Orientation(this).setMask(0x3F))
 
-	add(new StaticBlockRenderer(this).setTexture(func((dir: Direction) => Optional.of(ResonantEngine.textureCreativeBuilder))))
+	add(new StaticBlockRenderer(this).setTexture(func((dir: Direction) => Optional.of(Content.textureCreativeBuilder))))
 
 	rightClickEvent.add((evt: RightClickEvent) => onRightClick(evt))
 
