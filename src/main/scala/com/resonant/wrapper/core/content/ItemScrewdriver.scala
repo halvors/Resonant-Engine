@@ -5,11 +5,12 @@ import java.util.Optional
 import buildcraft.api.tools.IToolWrench
 import com.resonant.wrapper.core.{Content, ResonantEngine}
 import net.minecraft.entity.player.EntityPlayer
+import nova.core.component.Category
 import nova.core.item.Item
 import nova.core.render.texture.ItemTexture
-import nova.core.util.Category
 
-class ItemScrewdriver extends Item with IToolWrench with Category {
+class ItemScrewdriver extends Item with IToolWrench {
+	add(new Category("tools"))
 
 	override def getID: String = "screwdriver"
 
@@ -19,6 +20,4 @@ class ItemScrewdriver extends Item with IToolWrench with Category {
 	}
 
 	override def getTexture: Optional[ItemTexture] = Optional.of(Content.textureScrewdriver)
-
-	override def getCategory: String = "tools"
 }
