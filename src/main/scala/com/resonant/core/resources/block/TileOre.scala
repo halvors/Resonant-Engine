@@ -20,7 +20,7 @@ class TileOre extends Block with Resource {
 	add(new StaticBlockRenderer(this))
 		.setColorMultiplier((side: Direction) => if (renderingForeground) Color.argb(ResourceFactory.getColor(material)) else Color.white)
 		.setTexture(func((side: Direction) => if (renderingForeground) Optional.of(ResourceFactory.oreForeground) else Optional.of(ResourceFactory.oreBackground)))
-		.onRender(
+		.setOnRender(
 	    (model: Model) => {
 		    renderingForeground = false
 		    BlockModelUtil.drawBlock(model, TileOre.this)
