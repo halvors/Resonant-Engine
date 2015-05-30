@@ -1,13 +1,11 @@
 package com.resonant.core.prefab.itemblock
 
-import java.util
-import java.util.Optional
-
+import com.resonant.lib.wrapper.WrapFunctions._
 import com.resonant.wrapper.lib.wrapper.StringWrapper._
-import nova.core.entity.Entity
 import nova.core.game.Game
 import nova.core.gui.KeyManager.Key
 import nova.core.item.Item
+import nova.core.item.Item.TooltipEvent
 import nova.core.render.Color
 
 /**
@@ -15,18 +13,17 @@ import nova.core.render.Color
  */
 trait TooltipItem extends Item {
 
-	override def getTooltips(player: Optional[Entity], tooltips: util.List[String]) {
-		super.getTooltips(player, tooltips)
+	tooltipEvent.add(eventListener((evt: TooltipEvent) => {
 		val tooltipID = getID + ".tooltip"
 		val tooltip = tooltipID.getLocal
 
 		if (tooltip != null && !tooltip.isEmpty && !tooltip.equals(tooltipID)) {
 			if (!Game.instance.keyManager.isKeyDown(Key.KEY_LSHIFT)) {
-				tooltips.add("tooltip.noShift".getLocal.replace("#0", Color.blue.toString).replace("#1", Color.gray.toString))
+				evt.tooltips.add("tooltip.noShift".getLocal.replace("#0", Color.blue.toString).replace("#1", Color.gray.toString))
 			}
 			else {
-				tooltips.addAll(tooltip.listWrap(20))
+				evt.tooltips.addAll(tooltip.listWrap(20))
 			}
 		}
-	}
+	}))
 }
