@@ -186,6 +186,8 @@ object WrapFunctions {
 		def apply(t: T): T = f(t)
 	}
 
+	implicit def inverseSupplier[T](f: Supplier[T]): () => T = () => f.get()
+
 	//NOVA
 	implicit def eventListener[T](f: T => Unit): EventListener[T] = new EventListener[T] {
 		def onEvent(t: T) = f(t)
