@@ -1,8 +1,7 @@
 package com.resonant.wrapper.core.content
 
 import java.util.Optional
-
-import buildcraft.api.tools.IToolWrench
+import _root_.tools.IToolWrench
 import com.resonant.wrapper.core.{Content, ResonantEngine}
 import net.minecraft.entity.player.EntityPlayer
 import nova.core.component.Category
