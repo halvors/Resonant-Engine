@@ -1,4 +1,4 @@
-package com.resonant.lib.misc
+package com.resonant.lib
 
 import nova.core.block.Block
 import nova.core.retention.Data

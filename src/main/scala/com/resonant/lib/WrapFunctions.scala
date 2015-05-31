@@ -1,4 +1,4 @@
-package com.resonant.lib.wrapper
+package com.resonant.lib
 
 import java.util.function._
 
@@ -10,6 +10,7 @@ import nova.core.gui.{ComponentEvent, GuiComponent}
  * Implicitly converts Scala methods to Java methods.
  * @author anti344
  */
+//TODO: Move to NOVA-Scala
 object WrapFunctions {
 
 	import scala.language.implicitConversions

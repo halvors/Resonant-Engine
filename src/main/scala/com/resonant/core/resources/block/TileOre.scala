@@ -3,7 +3,8 @@ package com.resonant.core.resources.block
 import java.util.Optional
 
 import com.resonant.core.resources.{Resource, ResourceFactory}
-import com.resonant.lib.wrapper.WrapFunctions._
+import com.resonant.lib.WrapFunctions
+import WrapFunctions._
 import nova.core.block.Block
 import nova.core.block.component.StaticBlockRenderer
 import nova.core.render.Color

@@ -1,6 +1,7 @@
 package com.resonant.core.prefab.itemblock
 
-import com.resonant.lib.wrapper.WrapFunctions._
+import com.resonant.lib.WrapFunctions
+import WrapFunctions._
 import com.resonant.wrapper.lib.wrapper.StringWrapper._
 import nova.core.game.Game
 import nova.core.gui.KeyManager.Key

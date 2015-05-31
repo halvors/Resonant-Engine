@@ -2,7 +2,8 @@ package com.resonant.core.prefab.modcontent
 
 import java.util.function.{Function => JFunction}
 
-import com.resonant.lib.wrapper.WrapFunctions._
+import com.resonant.lib.WrapFunctions
+import WrapFunctions._
 import nova.core.block.{Block, BlockFactory}
 import nova.core.entity.{Entity, EntityFactory}
 import nova.core.game.Game

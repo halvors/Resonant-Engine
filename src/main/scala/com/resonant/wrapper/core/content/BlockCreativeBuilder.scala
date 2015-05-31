@@ -3,7 +3,8 @@ package com.resonant.wrapper.core.content
 import java.util.Optional
 
 import com.resonant.core.structure.Structure
-import com.resonant.lib.wrapper.WrapFunctions._
+import com.resonant.lib.WrapFunctions
+import WrapFunctions._
 import com.resonant.wrapper.core.{Content, ResonantEngine}
 import nova.core.block.Block
 import nova.core.block.Block.RightClickEvent

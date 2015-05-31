@@ -1,7 +1,11 @@
-package com.resonant.lib.util
+package com.resonant.lib
 
 import nova.core.util.Direction
 
+/**
+ * @author Calclavia
+ */
+//TODO: Move to NOVA
 object RotationUtility {
 	val relativeMatrix: Array[Array[Int]] = Array(Array(3, 2, 1, 0, 5, 4), Array(4, 5, 0, 1, 2, 3), Array(0, 1, 3, 2, 5, 4), Array(0, 1, 2, 3, 4, 5), Array(0, 1, 4, 5, 3, 2), Array(0, 1, 5, 4, 2, 3))
 	var sideRotMap: Array[Int] = Array[Int](3, 4, 2, 5, 3, 5, 2, 4, 1, 5, 0, 4, 1, 4, 0, 5, 1, 2, 0, 3, 1, 3, 0, 2)
