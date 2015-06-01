@@ -61,7 +61,7 @@ object ResourceFactory extends ContentLoader {
 	def requestBlock(resourceType: String, material: String): BlockFactory = {
 		assert(materials.contains(material))
 
-		val result = Game.blockManager.register(new JFunction[Array[AnyRef], Block] {
+		val result = Game.blocks.register(new JFunction[Array[AnyRef], Block] {
 			override def apply(args: Array[AnyRef]): Block = {
 				val newResource = resourceBlocks(resourceType).newInstance()
 				newResource.id = resourceType + material.capitalizeFirst
@@ -82,7 +82,7 @@ object ResourceFactory extends ContentLoader {
 
 	def requestItem(resourceType: String, material: String): ItemFactory = {
 		assert(materials.contains(material))
-		val result = Game.itemManager.register(new JFunction[Array[AnyRef], core.item.Item] {
+		val result = Game.items.register(new JFunction[Array[AnyRef], core.item.Item] {
 			override def apply(args: Array[AnyRef]): Item = {
 				val newResource = resourceItems(resourceType).newInstance()
 				newResource.id = resourceType + material.capitalizeFirst

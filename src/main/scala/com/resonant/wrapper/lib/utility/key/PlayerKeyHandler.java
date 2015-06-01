@@ -8,7 +8,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 /**
- * This class handles keys already binded to the game so to avoid creating new key bindings
+ * This class handles input already binded to the game so to avoid creating new key bindings
  * @author DarkGuardsman
  */
 public class PlayerKeyHandler {

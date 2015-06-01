@@ -20,7 +20,7 @@ object ResonantEngine extends Loadable {
 		/**
 		 * Register GUI
 		 */
-		Game.guiFactory.register(classOf[GuiCreativeBuilder])
+		Game.gui.register(classOf[GuiCreativeBuilder])
 		ResourceFactory.preInit()
 	}
 

@@ -32,7 +32,7 @@ trait IO extends Block with Storable with IIO {
 	protected var saveIOMap = false
 
 	def toggleIO(side: Int, entityPlayer: EntityPlayer): Boolean = {
-		if (Game.networkManager.isServer) {
+		if (Game.network.isServer) {
 			val newIO = (getIO(Direction.fromOrdinal(side)) + 1) % 3
 			setIO(Direction.fromOrdinal(side), newIO)
 			entityPlayer.addChatMessage(new ChatComponentText("Side changed to: " + (if (newIO == 0) "None" else if (newIO == 1) "Input" else "Output")))
@@ -48,6 +48,11 @@ trait IO extends Block with Storable with IIO {
 		ioMap = Integer.parseInt(str.toString, 3)
 	}
 
+	override def getIO(dir: Direction): Int = {
+		val currentIO: String = getIOMapBase3
+		return Integer.parseInt("" + currentIO.charAt(dir.ordinal))
+	}
+
 	def getIOMapBase3: String = {
 		var currentIO: String = Integer.toString(ioMap, 3)
 		while (currentIO.length < 6) {
@@ -55,11 +60,6 @@ trait IO extends Block with Storable with IIO {
 		}
 		return currentIO
 
-	}
-
-	override def getIO(dir: Direction): Int = {
-		val currentIO: String = getIOMapBase3
-		return Integer.parseInt("" + currentIO.charAt(dir.ordinal))
 	}
 
 	/**

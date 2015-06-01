@@ -4,7 +4,7 @@ import com.resonant.lib.WrapFunctions
 import WrapFunctions._
 import com.resonant.wrapper.lib.wrapper.StringWrapper._
 import nova.core.game.Game
-import nova.core.gui.KeyManager.Key
+import nova.core.gui.InputManager.Key
 import nova.core.item.Item
 import nova.core.item.Item.TooltipEvent
 import nova.core.render.Color
@@ -19,7 +19,7 @@ trait TooltipItem extends Item {
 		val tooltip = tooltipID.getLocal
 
 		if (tooltip != null && !tooltip.isEmpty && !tooltip.equals(tooltipID)) {
-			if (!Game.keyManager.isKeyDown(Key.KEY_LSHIFT)) {
+			if (!Game.input.isKeyDown(Key.KEY_LSHIFT)) {
 				evt.tooltips.add("tooltip.noShift".getLocal.replace("#0", Color.blue.toString).replace("#1", Color.gray.toString))
 			}
 			else {
