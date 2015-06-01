@@ -21,8 +21,6 @@ import nova.core.render.texture.{BlockTexture, ItemTexture}
  */
 object ResourceFactory extends ContentLoader {
 
-	override def id: String = Reference.id
-
 	val oreForeground = new BlockTexture(Reference.id, "oreForeground")
 	val oreBackground = new BlockTexture(Reference.id, "oreBackground")
 	val ingot = new ItemTexture(Reference.id, "ingot")
@@ -35,6 +33,8 @@ object ResourceFactory extends ContentLoader {
 	private var resourceItems = Map.empty[String, Class[_ <: Item with Resource]]
 	private var generatedBlocks = Map.empty[(String, String), BlockFactory]
 	private var generatedItems = Map.empty[(String, String), ItemFactory]
+
+	override def id: String = Reference.id
 
 	/**
 	 * Materials must be first registered before use
@@ -61,7 +61,7 @@ object ResourceFactory extends ContentLoader {
 	def requestBlock(resourceType: String, material: String): BlockFactory = {
 		assert(materials.contains(material))
 
-		val result = Game.instance.blockManager.register(new JFunction[Array[AnyRef], Block] {
+		val result = Game.blockManager.register(new JFunction[Array[AnyRef], Block] {
 			override def apply(args: Array[AnyRef]): Block = {
 				val newResource = resourceBlocks(resourceType).newInstance()
 				newResource.id = resourceType + material.capitalizeFirst
@@ -72,7 +72,7 @@ object ResourceFactory extends ContentLoader {
 		generatedBlocks += (resourceType, material) -> result
 
 		//Register ore dictionary
-		Game.instance.itemDictionary.add(resourceType + material.capitalizeFirst, result.getID)
+		Game.itemDictionary.add(resourceType + material.capitalizeFirst, result.getID)
 		return result
 	}
 
@@ -82,7 +82,7 @@ object ResourceFactory extends ContentLoader {
 
 	def requestItem(resourceType: String, material: String): ItemFactory = {
 		assert(materials.contains(material))
-		val result = Game.instance.itemManager.register(new JFunction[Array[AnyRef], core.item.Item] {
+		val result = Game.itemManager.register(new JFunction[Array[AnyRef], core.item.Item] {
 			override def apply(args: Array[AnyRef]): Item = {
 				val newResource = resourceItems(resourceType).newInstance()
 				newResource.id = resourceType + material.capitalizeFirst
@@ -94,7 +94,7 @@ object ResourceFactory extends ContentLoader {
 		generatedItems += (resourceType, material) -> result
 
 		//Register ore dictionary
-		Game.instance.itemDictionary.add(resourceType + material.capitalizeFirst, result.getID)
+		Game.itemDictionary.add(resourceType + material.capitalizeFirst, result.getID)
 		return result
 	}
 

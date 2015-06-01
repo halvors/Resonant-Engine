@@ -40,8 +40,8 @@ trait ContentLoader extends Loadable {
 				obj match {
 					case itemWrapper: ItemClassWrapper =>
 						if (itemWrapper.wrapped.newInstance().isInstanceOf[AutoItemTexture]) {
-							val texture = Game.instance.renderManager.registerTexture(new ItemTexture(id, itemWrapper.getID))
-							field.set(self, Game.instance.itemManager.register(
+							val texture = Game.renderManager.registerTexture(new ItemTexture(id, itemWrapper.getID))
+							field.set(self, Game.itemManager.register(
 								(args: Array[AnyRef]) => {
 									val wrapped = itemWrapper.wrapped.newInstance()
 									wrapped.asInstanceOf[AutoItemTexture].texture = texture
@@ -50,12 +50,12 @@ trait ContentLoader extends Loadable {
 							))
 						}
 						else {
-							field.set(self, Game.instance.itemManager.register(itemWrapper.wrapped))
+							field.set(self, Game.itemManager.register(itemWrapper.wrapped))
 						}
 					case itemConstructor: ItemConstructorWrapper =>
 						if (itemConstructor.wrapped.apply().isInstanceOf[AutoItemTexture]) {
-							val texture = Game.instance.renderManager.registerTexture(new ItemTexture(id, itemConstructor.wrapped.getID))
-							field.set(self, Game.instance.itemManager.register(
+							val texture = Game.renderManager.registerTexture(new ItemTexture(id, itemConstructor.wrapped.getID))
+							field.set(self, Game.itemManager.register(
 								(args: Array[AnyRef]) => {
 									val wrapped = itemConstructor.wrapped.apply()
 									wrapped.asInstanceOf[AutoItemTexture].texture = texture
@@ -64,14 +64,14 @@ trait ContentLoader extends Loadable {
 							))
 						}
 						else {
-							field.set(self, Game.instance.itemManager.register(itemConstructor))
+							field.set(self, Game.itemManager.register(itemConstructor))
 						}
 
 					case blockWrapper: BlockClassWrapper =>
 						if (blockWrapper.wrapped.newInstance().isInstanceOf[AutoBlockTexture]) {
-							val texture = Game.instance.renderManager.registerTexture(new BlockTexture(id, blockWrapper.getID))
-							Game.instance.renderManager.registerTexture(new BlockTexture(id, blockWrapper.getID))
-							field.set(self, Game.instance.blockManager.register(
+							val texture = Game.renderManager.registerTexture(new BlockTexture(id, blockWrapper.getID))
+							Game.renderManager.registerTexture(new BlockTexture(id, blockWrapper.getID))
+							field.set(self, Game.blockManager.register(
 								(args: Array[AnyRef]) => {
 									val wrapped = blockWrapper.wrapped.newInstance()
 									wrapped.asInstanceOf[AutoBlockTexture].texture = texture
@@ -80,13 +80,13 @@ trait ContentLoader extends Loadable {
 							))
 						}
 						else {
-							field.set(self, Game.instance.blockManager.register(blockWrapper.wrapped))
+							field.set(self, Game.blockManager.register(blockWrapper.wrapped))
 						}
 					case blockConstructor: BlockConstructorWrapper =>
 						if (blockConstructor.wrapped.apply().isInstanceOf[AutoBlockTexture]) {
-							val texture = Game.instance.renderManager.registerTexture(new BlockTexture(id, blockConstructor.getID))
-							Game.instance.renderManager.registerTexture(new BlockTexture(id, blockConstructor.getID))
-							field.set(self, Game.instance.blockManager.register(
+							val texture = Game.renderManager.registerTexture(new BlockTexture(id, blockConstructor.getID))
+							Game.renderManager.registerTexture(new BlockTexture(id, blockConstructor.getID))
+							field.set(self, Game.blockManager.register(
 								(args: Array[AnyRef]) => {
 									val wrapped = blockConstructor.wrapped.apply()
 									wrapped.asInstanceOf[AutoBlockTexture].texture = texture
@@ -95,14 +95,14 @@ trait ContentLoader extends Loadable {
 							))
 						}
 						else {
-							field.set(self, Game.instance.blockManager.register(blockConstructor))
+							field.set(self, Game.blockManager.register(blockConstructor))
 						}
-					case factory: EntityClassWrapper => field.set(self, Game.instance.entityManager.register(factory))
-					case factory: EntityConstructorWrapper => field.set(self, Game.instance.entityManager.register(factory))
-					case itemTexture: ItemTexture => field.set(self, Game.instance.renderManager.registerTexture(itemTexture))
-					case blockTexture: BlockTexture => field.set(self, Game.instance.renderManager.registerTexture(blockTexture))
-					case modelProvider: ModelProvider => field.set(self, Game.instance.renderManager.registerModel(modelProvider))
-					case guiFactory: GuiConstructorWrapper => Game.instance.guiFactory.register(guiFactory)
+					case factory: EntityClassWrapper => field.set(self, Game.entityManager.register(factory))
+					case factory: EntityConstructorWrapper => field.set(self, Game.entityManager.register(factory))
+					case itemTexture: ItemTexture => field.set(self, Game.renderManager.registerTexture(itemTexture))
+					case blockTexture: BlockTexture => field.set(self, Game.renderManager.registerTexture(blockTexture))
+					case modelProvider: ModelProvider => field.set(self, Game.renderManager.registerModel(modelProvider))
+					case guiFactory: GuiConstructorWrapper => Game.guiFactory.register(guiFactory)
 					case _ =>
 				}
 			}

@@ -20,17 +20,17 @@ object ResonantEngine extends Loadable {
 		/**
 		 * Register GUI
 		 */
-		Game.instance.guiFactory.register(classOf[GuiCreativeBuilder])
+		Game.guiFactory.register(classOf[GuiCreativeBuilder])
 		ResourceFactory.preInit()
 	}
 
 	override def postInit() {
 		/*
-		Game.instance.itemDictionary.add("ingotGold", Items.gold_ingot)
-		Game.instance.itemDictionary.add("ingotIron", Items.iron_ingot)
-		Game.instance.itemDictionary.add("oreGold", Blocks.gold_ore)
-		Game.instance.itemDictionary.add("oreIron", Blocks.iron_ore)
-		Game.instance.itemDictionary.add("oreLapis", Blocks.lapis_ore)
+		Game.itemDictionary.add("ingotGold", Items.gold_ingot)
+		Game.itemDictionary.add("ingotIron", Items.iron_ingot)
+		Game.itemDictionary.add("oreGold", Blocks.gold_ore)
+		Game.itemDictionary.add("oreIron", Blocks.iron_ore)
+		Game.itemDictionary.add("oreLapis", Blocks.lapis_ore)
 		
 
 		MachineRecipes.instance.addRecipe(RecipeType.SMELTER.name, new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(Blocks.stone))

@@ -33,13 +33,13 @@ class BlockCreativeBuilder extends Block with PacketHandler {
 	 * Called when the block is right clicked by the player
 	 */
 	def onRightClick(evt: RightClickEvent) {
-		Game.instance.guiFactory.showGui("creativeBuilder", evt.entity, transform.position)
+		Game.guiFactory.showGui("creativeBuilder", evt.entity, transform.position)
 		evt.result = true
 	}
 
 	override def read(packet: Packet) {
 		super.read(packet)
-		if (Game.instance.networkManager.isServer && packet.getID == 1) {
+		if (Game.networkManager.isServer && packet.getID == 1) {
 			val schematicID = packet.readInt
 			val size = packet.readInt
 			val buildMap = BlockCreativeBuilder.schematics(schematicID).getBlockStructure

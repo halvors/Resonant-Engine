@@ -19,7 +19,7 @@ trait TooltipItem extends Item {
 		val tooltip = tooltipID.getLocal
 
 		if (tooltip != null && !tooltip.isEmpty && !tooltip.equals(tooltipID)) {
-			if (!Game.instance.keyManager.isKeyDown(Key.KEY_LSHIFT)) {
+			if (!Game.keyManager.isKeyDown(Key.KEY_LSHIFT)) {
 				evt.tooltips.add("tooltip.noShift".getLocal.replace("#0", Color.blue.toString).replace("#1", Color.gray.toString))
 			}
 			else {
