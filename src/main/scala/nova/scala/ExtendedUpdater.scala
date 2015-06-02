@@ -1,4 +1,4 @@
-package com.resonant.core.prefab.block
+package nova.scala
 
 /**
  * An object that can handle ticks.
