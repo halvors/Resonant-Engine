@@ -4,7 +4,7 @@ package com.resonant.core.prefab.block
  * An object that can handle ticks.
  * @author Calclavia
  */
-trait Updater extends nova.core.component.Updater {
+trait ExtendedUpdater extends nova.core.component.Updater {
 
 	protected var ticks = 0L
 
