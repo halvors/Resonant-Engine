@@ -21,7 +21,10 @@ trait Stat[T] extends Ordered[T] with Storable {
 
 	def isMax: Boolean = n.gteq(value, max)
 
-	def setMax(newMax: T) = max = newMax
+	def setMax(newMax: T): this.type = {
+		max = newMax
+		return this
+	}
 
 	def isLastEmpty: Boolean = (prev == 0 && !isMin) || (n.gt(prev, n.zero) && isMin)
 
