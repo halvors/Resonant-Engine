@@ -6,15 +6,16 @@ import nova.core.retention.{Data, Storable}
  * A stat is a type of positive numerical value that has a maximum value
  * @author Calclavia
  */
-class Stat[T](implicit n: Numeric[T]) extends Ordered[T] with Storable {
+
+trait Stat[T] extends Ordered[T] with Storable {
+
 	private var _value: T = n.zero
 	private var _prevValue: T = n.zero
 	private var _max: T = n.zero
 
-	def this(newMax: T)(implicit n: Numeric[T]) {
-		this()(n)
-		max = newMax
-	}
+	//def n = implicitly[Numeric[T]]
+
+	protected[this] implicit def n: Numeric[T]
 
 	def setValue(newVal: T) = value = newVal
 
