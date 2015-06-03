@@ -1,7 +1,7 @@
 package com.resonant.wrapper.lib.utility.science.units;
 
 import nova.core.game.Game;
-import nova.core.util.collection.Pair;
+import nova.core.util.collection.Tuple2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class UnitHelper {
 			try {
 				return Integer.parseInt((String) var);
 			} catch (NumberFormatException e) {
-				Game.instance.logger.error(e.getMessage());
+				Game.logger().error(e.getMessage());
 			}
 		}
 		if (var instanceof Integer || var instanceof Float || var instanceof Double || var instanceof Long) {
@@ -65,7 +65,7 @@ public class UnitHelper {
 			try {
 				return Double.parseDouble((String) var);
 			} catch (NumberFormatException e) {
-				Game.instance.logger.error(e.getMessage());
+				Game.logger().error(e.getMessage());
 			}
 		}
 		if (var instanceof Integer || var instanceof Float || var instanceof Double) {
@@ -94,7 +94,7 @@ public class UnitHelper {
 			try {
 				return Float.parseFloat((String) var);
 			} catch (NumberFormatException e) {
-				Game.instance.logger.error(e.getMessage());
+				Game.logger().error(e.getMessage());
 			}
 		}
 		if (var instanceof Integer || var instanceof Float || var instanceof Double) {
@@ -122,8 +122,8 @@ public class UnitHelper {
 		return b.convert(ImperialUnits.foot, a.convert(MetricUnit.BASE, value) * METERS_TO_FEET);
 	}
 
-	public Pair<Object, Float> parseString(String input) {
-		Pair<Object, Float> def = null;
+	public Tuple2<Object, Float> parseString(String input) {
+		Tuple2<Object, Float> def = null;
 		if (input != null && !input.isEmpty()) {
 			String editedString = input;
 			char[] chars = input.toCharArray();
@@ -147,7 +147,7 @@ public class UnitHelper {
 			try {
 				number = Float.parseFloat(numberAsString);
 			} catch (NumberFormatException e) {
-				Game.instance.logger.error(e.getMessage());
+				Game.logger().error(e.getMessage());
 			}
 			editedString.replaceAll("[0-9]", "");
 			chars = editedString.toCharArray();
@@ -163,7 +163,7 @@ public class UnitHelper {
 			}
 
 			//TODO detect units
-			return new Pair<Object, Float>(unitEnumValue, number);
+			return new Tuple2<Object, Float>(unitEnumValue, number);
 		}
 
 		return def;

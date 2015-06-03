@@ -2,7 +2,7 @@ package com.resonant.core.access
 
 import java.util.List
 
-import com.resonant.lib.collection.TreeNode
+import nova.core.util.collection.TreeNode
 
 import scala.collection.JavaConversions._
 

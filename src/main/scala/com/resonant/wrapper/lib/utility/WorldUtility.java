@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import nova.core.util.Direction;
-import nova.core.util.transform.Vector3d;
+import nova.core.util.transform.vector.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;

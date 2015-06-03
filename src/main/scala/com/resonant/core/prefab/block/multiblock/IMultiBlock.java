@@ -1,6 +1,6 @@
 package com.resonant.core.prefab.block.multiblock;
 
-import nova.core.util.transform.Vector3i;
+import nova.core.util.transform.vector.Vector3i;
 
 /**
  * Interface to be applied to block entity blocks that occupies more than one block space. Useful for

@@ -1,6 +1,6 @@
 package com.resonant.core.prefab.block.multiblock;
 
-import nova.core.util.transform.Vector3i;
+import nova.core.util.transform.vector.Vector3i;
 import nova.core.world.World;
 
 public interface IMultiBlockStructure<W extends IMultiBlockStructure> extends IMultiBlock {

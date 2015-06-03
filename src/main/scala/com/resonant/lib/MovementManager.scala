@@ -1,8 +1,8 @@
-package com.resonant.lib.misc
+package com.resonant.lib
 
 import nova.core.block.Block
 import nova.core.retention.Data
-import nova.core.util.transform.Vector3i
+import nova.core.util.transform.vector.Vector3i
 import nova.core.world.World
 
 /**

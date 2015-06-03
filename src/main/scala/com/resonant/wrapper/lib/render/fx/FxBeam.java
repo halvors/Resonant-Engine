@@ -11,7 +11,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import nova.core.util.transform.Vector3d;
+import nova.core.util.transform.vector.Vector3d;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;

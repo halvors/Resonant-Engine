@@ -3,12 +3,14 @@ package com.resonant.core.structure
 import java.util.Optional
 
 import com.google.common.math.DoubleMath
-import nova.core.block.Block
+import nova.core.block.BlockFactory
 import nova.core.util.Identifiable
-import nova.core.util.transform.{MatrixStack, Quaternion, Vector3d, Vector3i}
+import nova.core.util.transform.matrix.{MatrixStack, Quaternion}
+import nova.core.util.transform.vector.{Vector3d, Vector3i}
 
 import scala.beans.BeanProperty
 import scala.collection.parallel
+import scala.collection.parallel.ParSet
 
 /**
  * Defines a 3D structure.
@@ -20,13 +22,15 @@ abstract class Structure extends Identifiable {
 	@BeanProperty
 	var error = 0.001
 	@BeanProperty
+	var stepSize = 1.0
+	@BeanProperty
 	var translate = Vector3d.zero
 	@BeanProperty
 	var scale = Vector3d.one
 	@BeanProperty
 	var rotation = Quaternion.identity
 	@BeanProperty
-	var block = Optional.empty[Block]()
+	var blockFactory = Optional.empty[BlockFactory]()
 	/**
 	 * A mapper that acts as a custom transformation function
 	 */
@@ -44,30 +48,29 @@ abstract class Structure extends Identifiable {
 	 * Do a search within an appropriate region by generating a search set.
 	 */
 	def searchSpace: parallel.ParIterable[Vector3d] = {
-		var search = Set.empty[Vector3d]
+		var search = ParSet.empty[Vector3d]
 
-		//TODO: add these using par streams?
-		for (x <- -scale.x / 2 to scale.x / 2 by 0.5; y <- -scale.y / 2 to scale.y / 2 by 0.5; z <- -scale.z / 2 to scale.z / 2 by 0.5) {
+		for (x <- -scale.x / 2 to scale.x / 2 by stepSize; y <- -scale.y / 2 to scale.y / 2 by stepSize; z <- -scale.z / 2 to scale.z / 2 by stepSize) {
 			search += new Vector3d(x, y, z)
 		}
-		return search.view.par
+		return search
 	}
 
 	def getExteriorStructure: Set[Vector3i] = getStructure(surfaceEquation)
 
 	def getInteriorStructure: Set[Vector3i] = getStructure(volumeEquation)
-	
-	def getBlockStructure: Map[Vector3i, Block] = {
+
+	def getBlockStructure: Map[Vector3i, BlockFactory] = {
 		//TODO: Should be exterior?
 		return getExteriorStructure
-			.filter(getBlock(_).isPresent)
-			.map(v => (v, getBlock(v).get()))
+			.filter(getBlockFactory(_).isPresent)
+			.map(v => (v, getBlockFactory(v).get()))
 			.toMap
 	}
 
 	protected def getStructure(equation: (Vector3d) => Double): Set[Vector3i] = {
 		//TODO: Use negate matrix
-		val rotationMatrix = new MatrixStack().rotate(rotation).getMatrix
+		val transformMatrix = new MatrixStack().rotate(rotation).scale(scale).getMatrix.reciprocal()
 
 		/**
 		 * The equation has default transformations.
@@ -75,7 +78,7 @@ abstract class Structure extends Identifiable {
 		 */
 		val structure = searchSpace
 			.collect(preMapper)
-			.filter(v => DoubleMath.fuzzyEquals(equation(v.transform(rotationMatrix).divide(scale)), 0, error))
+			.filter(v => DoubleMath.fuzzyEquals(equation(v.transform(transformMatrix)), 0, error))
 			.map(_ + translate)
 			.map(_.toInt)
 			.collect(postMapper)
@@ -90,7 +93,7 @@ abstract class Structure extends Identifiable {
 	 * @param position
 	 * @return
 	 */
-	def getBlock(position: Vector3i): Optional[Block] = block
+	def getBlockFactory(position: Vector3i): Optional[BlockFactory] = blockFactory
 
 	/**
 	 * Checks if this world position is within this structure. 

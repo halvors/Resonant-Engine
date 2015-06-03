@@ -1,8 +1,13 @@
 package com.resonant.core.energy
 
+import nova.core.component.Component
+
 /**
  * A node used to store energy.
  * @author Calclavia
  */
-class EnergyStorage(max: Double = 0) extends Stat[Double](max) {
+//TODO: Move to Energy API (if decided), change to component
+class EnergyStorage extends Component with Stat[Double] {
+
+	override protected[this] implicit def n: Numeric[Double] =  Numeric.DoubleIsFractional
 }

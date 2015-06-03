@@ -1,68 +1,36 @@
 package com.resonant.wrapper.core
 
-import com.resonant.core.graph.api.{NodeElectric, NodeRegistry}
-import com.resonant.core.graph.internal.electric.NodeElectricComponent
-import com.resonant.core.graph.internal.thermal.GridThermal
-import com.resonant.core.prefab.modcontent.ContentLoader
 import com.resonant.core.resources.ResourceFactory
-import com.resonant.wrapper.core.content.{BlockCreativeBuilder, GuiCreativeBuilder, ItemScrewdriver}
-import nova.core.block.Block
-import nova.core.event.EventListener
-import nova.core.event.EventManager.EmptyEvent
+import com.resonant.wrapper.core.content.GuiCreativeBuilder
 import nova.core.game.Game
-import nova.core.item.Item
-import nova.core.loader.NovaMod
-import nova.core.render.texture.{BlockTexture, ItemTexture}
+import nova.core.loader.{Loadable, NovaMod}
 
 /**
  * Resonant Engine's main loading class
  * @author Calclavia
  */
 @NovaMod(id = Reference.id, name = Reference.name, version = Reference.version, novaVersion = "0.0.1")
-object ResonantEngine extends ContentLoader {
-
-	val blockCreativeBuilder: Block = classOf[BlockCreativeBuilder]
-	val itemScrewdriver: Item = classOf[ItemScrewdriver]
-
-	val textureCreativeBuilder = new BlockTexture(Reference.id, "creativeBuilder")
-	val textureScrewdriver = new ItemTexture(Reference.id, "screwdriver")
+object ResonantEngine extends Loadable {
 
 	override def preInit() {
 		super.preInit()
 
+		Content.preInit()
+
 		/**
 		 * Register GUI
 		 */
-		Game.instance.guiFactory.registerGui(new GuiCreativeBuilder, Reference.id)
-
-		/**
-		 * Register events 
-		 */
-		Game.instance.eventManager.serverStopping.add(new EventListener[EmptyEvent] {
-			override def onEvent(event: EmptyEvent): Unit = serverStopped()
-		})
-
-		Game.instance.threadTicker.add(GridThermal)
-
+		Game.gui.register(classOf[GuiCreativeBuilder])
 		ResourceFactory.preInit()
-
-		/**
-		 * Register graphs 
-		 */
-		NodeRegistry.instance.register(classOf[NodeElectric], classOf[NodeElectricComponent])
-	}
-
-	def serverStopped() {
-		GridThermal.clear()
 	}
 
 	override def postInit() {
 		/*
-		Game.instance.itemDictionary.add("ingotGold", Items.gold_ingot)
-		Game.instance.itemDictionary.add("ingotIron", Items.iron_ingot)
-		Game.instance.itemDictionary.add("oreGold", Blocks.gold_ore)
-		Game.instance.itemDictionary.add("oreIron", Blocks.iron_ore)
-		Game.instance.itemDictionary.add("oreLapis", Blocks.lapis_ore)
+		Game.itemDictionary.add("ingotGold", Items.gold_ingot)
+		Game.itemDictionary.add("ingotIron", Items.iron_ingot)
+		Game.itemDictionary.add("oreGold", Blocks.gold_ore)
+		Game.itemDictionary.add("oreIron", Blocks.iron_ore)
+		Game.itemDictionary.add("oreLapis", Blocks.lapis_ore)
 		
 
 		MachineRecipes.instance.addRecipe(RecipeType.SMELTER.name, new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(Blocks.stone))

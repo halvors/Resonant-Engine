@@ -1,6 +1,7 @@
 package com.resonant.core.structure
 
-import nova.core.util.transform.{Cuboid, Vector3d}
+import nova.core.util.transform.shape.Cuboid
+import nova.core.util.transform.vector.Vector3d
 
 /**
  * A cube structure.

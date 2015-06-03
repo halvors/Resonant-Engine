@@ -3,7 +3,7 @@ package com.resonant.core.prefab.block.multiblock;
 import nova.core.block.Block;
 import nova.core.retention.Data;
 import nova.core.retention.Storable;
-import nova.core.util.transform.Vector3i;
+import nova.core.util.transform.vector.Vector3i;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedHashSet;

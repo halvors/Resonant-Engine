@@ -4,9 +4,9 @@ import nova.core.block.Block;
 import nova.core.fluid.Fluid;
 import nova.core.fluid.FluidBlock;
 import nova.core.fluid.SidedTankProvider;
-import nova.core.fluid.Tank;
+import nova.core.fluid.component.Tank;
 import nova.core.util.Direction;
-import nova.core.util.transform.Vector3i;
+import nova.core.util.transform.vector.Vector3i;
 import nova.core.world.World;
 
 import java.util.Collections;
@@ -108,11 +108,11 @@ public class FluidUtility {
 	 * @return The amount of fluid used.
 	 */
 	public static int fillBlock(World world, Vector3i pos, Fluid fluid, boolean doFill) {
-		if (fluid.amount() >= Fluid.bucketVolume && fluid.getBlock().isPresent()) {
+		if (fluid.amount() >= Fluid.bucketVolume && fluid.getBlockFactory().isPresent()) {
 			Optional<Block> block = world.getBlock(pos);
 			if (!block.isPresent()) {
 				if (doFill) {
-					world.setBlock(pos, (Block) fluid.getBlock().get());
+					world.setBlock(pos, fluid.getBlockFactory().get());
 				}
 				return Fluid.bucketVolume;
 			} else {
