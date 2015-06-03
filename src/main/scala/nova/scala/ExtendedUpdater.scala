@@ -4,7 +4,7 @@ package nova.scala
  * An object that can handle ticks.
  * @author Calclavia
  */
-//TODO: Move to NOVA-Scala
+//TODO: Move to NOVA-Scala, change ticks to time.
 trait ExtendedUpdater extends nova.core.component.Updater {
 
 	protected var ticks = 0L
