@@ -4,15 +4,15 @@
 death.attack.electrocution=%1$s got electrocuted!
 
 ## Ores
-tile.oreCopper.name=Copper Ore
-tile.oreTin.name=Tin Ore
-tile.oreSilver.name=Silver Ore
-tile.oreLead.name=Lead Ore
-tile.oreZinc.name=Zinc Ore
-tile.oreNickel.name=Nickel Ore
-tile.oreAluminium.name=Bauxite Ore
-tile.oreMagnesium.name=Magnesite Ore
-tile.oreUranium.name=Uranium Ore
+block.oreCopper.name=Copper Ore
+block.oreTin.name=Tin Ore
+block.oreSilver.name=Silver Ore
+block.oreLead.name=Lead Ore
+block.oreZinc.name=Zinc Ore
+block.oreNickel.name=Nickel Ore
+block.oreAluminium.name=Bauxite Ore
+block.oreMagnesium.name=Magnesite Ore
+block.oreUranium.name=Uranium Ore
 
 ## Dust
 item.dustCopper.name=Copper Dust
@@ -165,9 +165,9 @@ item.hoeHeadBrass.name=Brass Hoe Head
 item.hoeHeadBronze.name=Bronze Hoe Head
 
 ## Creative Testing Blocks
-tile.creativeBuilder.name=Creative Builder
-tile.infiniteEnergy.name=Infinite Energy
-tile.infiniteFluid.name=Infinite Fluid
+block.creativeBuilder.name=Creative Builder
+block.infiniteEnergy.name=Infinite Energy
+block.infiniteFluid.name=Infinite Fluid
 
 ## Tools
 toolmode.mode=Mode
