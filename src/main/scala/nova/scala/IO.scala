@@ -2,6 +2,7 @@ package nova.scala
 
 import nova.core.block.Block
 import nova.core.component.Component
+import nova.core.component.transform.Orientation
 import nova.core.event.{Event, EventBus}
 import nova.core.network.{PacketHandler, Sync}
 import nova.core.retention.{Storable, Stored}
@@ -15,63 +16,41 @@ import nova.core.util.Direction
 //TODO: Would this be useful for NOVA?
 class IO(block: Block) extends Component with Storable with PacketHandler {
 
-	/**
-	 * IO METHODS.
-	 * Default: Connect from all sides. "111111"
-	 * Output all sides: 728
-	 * 0 - Nothing
-	 * 1 - Input
-	 * 2 - Output
-	 */
-	//TODO: Using ternary is kind of ineffective
 	@Stored
 	@Sync
-	var mask = 364
+	var inputMask = 0x3F
+
+	@Stored
+	@Sync
+	var outputMask = 0x00
 
 	var changeEvent = new EventBus[Event]
-	/*
-		def toggleIO(side: Int, entityPlayer: EntityPlayer): Boolean = {
-			if (Game.network.isServer) {
-				val newIO = (getIO(Direction.fromOrdinal(side)) + 1) % 3
-				setIO(Direction.fromOrdinal(side), newIO)
-				entityPlayer.addChatMessage(new ChatComponentText("Side changed to: " + (if (newIO == 0) "None" else if (newIO == 1) "Input" else "Output")))
-				block.world.markChange(block.transform.position)
-			}
-			return true
-		}
-
-		def setIO(dir: Direction, ioType: Int) {
-			val currentIO: String = getIOMapBase3
-			val str: StringBuilder = new StringBuilder(currentIO)
-			str.setCharAt(dir.ordinal, Integer.toString(ioType).charAt(0))
-			val prevMask = mask
-			mask = Integer.parseInt(str.toString, 3)
-			if (mask != prevMask) {
-				changeEvent.publish(new Event)
-			}
-		}*/
 
 	def getIO(dir: Direction): Int = {
-		val currentIO: String = getIOMapBase3
-		return Integer.parseInt("" + currentIO.charAt(dir.ordinal))
-	}
-
-	def getIOMapBase3: String = {
-		var currentIO: String = Integer.toString(mask, 3)
-		while (currentIO.length < 6) {
-			currentIO = "0" + currentIO
+		if ((inputMask & (1 << dir.ordinal())) != 0) {
+			return 1
 		}
-		return currentIO
+		if ((outputMask & (1 << dir.ordinal())) != 0) {
+			return 2
+		}
+		return 0
 	}
 
 	/**
-	 * The input directions.
+	 * Helper method
 	 */
-	def inputMask = Direction.DIRECTIONS.filter(getIO(_) == 1).map(1 << _.ordinal()).foldLeft(0)((a, b) => a | b)
+	def setIOAlternatingOrientation() {
+		val dirMask = 1 << block.get(classOf[Orientation]).orientation.ordinal
+		val positiveMask = 0x2A
+		val isPositive = (dirMask & positiveMask) != 0
 
-	/**
-	 * The output directions.
-	 */
-	def outputMask = Direction.DIRECTIONS.filter(getIO(_) == 2).map(1 << _.ordinal()).foldLeft(0)((a, b) => a | b)
-
+		if (isPositive) {
+			inputMask = positiveMask & ~dirMask
+			outputMask = inputMask >> 1
+		} else {
+			val negativeMask = 0x15
+			outputMask = negativeMask & ~dirMask
+			inputMask = outputMask << 1
+		}
+	}
 }
