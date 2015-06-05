@@ -12,7 +12,7 @@ import nova.core.gui.factory.GuiFactory
 import nova.core.item.{Item, ItemFactory}
 import nova.core.loader.Loadable
 import nova.core.render.model.ModelProvider
-import nova.core.render.texture.{BlockTexture, ItemTexture}
+import nova.core.render.texture.{EntityTexture, BlockTexture, ItemTexture}
 
 /**
  * Automatic mffs.content registration for all Blocks, Items, Entities and Textures.
@@ -101,6 +101,7 @@ trait ContentLoader extends Loadable {
 					case factory: EntityConstructorWrapper => field.set(self, Game.entities.register(factory))
 					case itemTexture: ItemTexture => field.set(self, Game.render.registerTexture(itemTexture))
 					case blockTexture: BlockTexture => field.set(self, Game.render.registerTexture(blockTexture))
+					case entityTexture: EntityTexture => field.set(self, Game.render.registerTexture(entityTexture))
 					case modelProvider: ModelProvider => field.set(self, Game.render.registerModel(modelProvider))
 					case guiFactory: GuiConstructorWrapper => Game.gui.register(guiFactory)
 					case _ =>
