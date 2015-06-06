@@ -5,7 +5,7 @@ import nova.core.component.Component
 import nova.core.component.transform.Orientation
 import nova.core.event.{Event, EventBus}
 import nova.core.network.{Syncable, Sync}
-import nova.core.retention.{Storable, Stored}
+import nova.core.retention.{Storable, Store}
 import nova.core.util.Direction
 
 /**
@@ -16,11 +16,11 @@ import nova.core.util.Direction
 //TODO: Would this be useful for NOVA?
 class IO(block: Block) extends Component with Storable with Syncable {
 
-	@Stored
+	@Store
 	@Sync
 	var inputMask = 0x3F
 
-	@Stored
+	@Store
 	@Sync
 	var outputMask = 0x00
 

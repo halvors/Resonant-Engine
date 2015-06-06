@@ -1,9 +1,9 @@
 package com.resonant.core.access
 
 import nova.core.entity.component.Player
-import nova.core.retention.Stored
+import nova.core.retention.Store
 
-class AccessUser(@Stored var username: String) extends AbstractAccess {
+class AccessUser(@Store var username: String) extends AbstractAccess {
 
 	def this(player: Player) {
 		this(player.getDisplayName)

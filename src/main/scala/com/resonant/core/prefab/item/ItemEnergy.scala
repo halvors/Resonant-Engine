@@ -6,7 +6,7 @@ import WrapFunctions._
 import com.resonant.wrapper.lib.utility.science.UnitDisplay
 import nova.core.item.Item
 import nova.core.item.Item.TooltipEvent
-import nova.core.retention.{Storable, Stored}
+import nova.core.retention.{Storable, Store}
 
 /**
  * A trait implementation of IEnergyItem
@@ -17,7 +17,7 @@ trait ItemEnergy extends Item with EnergyItem with Storable {
 
 	protected var maxEnergy = 0d
 
-	@Stored
+	@Store
 	protected var energy = 0d
 
 	tooltipEvent.add(eventListener((evt: TooltipEvent) => {
