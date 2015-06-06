@@ -4,7 +4,7 @@ import nova.core.block.Block
 import nova.core.component.Component
 import nova.core.component.transform.Orientation
 import nova.core.event.{Event, EventBus}
-import nova.core.network.{PacketHandler, Sync}
+import nova.core.network.{Syncable, Sync}
 import nova.core.retention.{Storable, Stored}
 import nova.core.util.Direction
 
@@ -14,7 +14,7 @@ import nova.core.util.Direction
  * @author Calclavia
  */
 //TODO: Would this be useful for NOVA?
-class IO(block: Block) extends Component with Storable with PacketHandler {
+class IO(block: Block) extends Component with Storable with Syncable {
 
 	@Stored
 	@Sync

@@ -12,14 +12,14 @@ import nova.core.block.component.StaticBlockRenderer
 import nova.core.component.Category
 import nova.core.component.transform.Orientation
 import nova.core.game.Game
-import nova.core.network.{Packet, PacketHandler}
+import nova.core.network.{Packet, Syncable}
 import nova.core.util.Direction
 
 object BlockCreativeBuilder {
 	var schematics: Seq[Structure] = Seq.empty
 }
 
-class BlockCreativeBuilder extends Block with PacketHandler {
+class BlockCreativeBuilder extends Block with Syncable {
 
 	add(new Orientation(this).setMask(0x3F))
 
