@@ -3,10 +3,10 @@ package com.resonant.core.structure
 import java.util
 
 import nova.core.block.BlockFactory
-import nova.core.game.Game
 import nova.core.retention.{Data, Storable}
 import nova.core.util.transform.matrix.MatrixStack
 import nova.core.util.transform.vector.{Vector3d, Vector3i}
+import nova.internal.Game
 
 import scala.collection.convert.wrapAll._
 

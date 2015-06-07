@@ -2,8 +2,8 @@ package com.resonant.wrapper.core
 
 import com.resonant.core.resources.ResourceFactory
 import com.resonant.wrapper.core.content.GuiCreativeBuilder
-import nova.core.game.Game
 import nova.core.loader.{Loadable, NovaMod}
+import nova.internal.Game
 
 /**
  * Resonant Engine's main loading class

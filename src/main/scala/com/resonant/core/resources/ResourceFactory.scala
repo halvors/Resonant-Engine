@@ -9,9 +9,10 @@ import com.resonant.wrapper.core.Reference
 import com.resonant.wrapper.lib.wrapper.StringWrapper._
 import nova.core
 import nova.core.block.{Block, BlockFactory}
-import nova.core.game.Game
 import nova.core.item.{Item, ItemFactory}
 import nova.core.render.texture.{BlockTexture, ItemTexture}
+import nova.internal.Game
+
 /**
  * A factor class generates different types of resources based on its material
  *

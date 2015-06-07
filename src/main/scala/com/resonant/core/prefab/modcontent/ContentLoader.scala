@@ -3,16 +3,16 @@ package com.resonant.core.prefab.modcontent
 import java.util.function.{Function => JFunction}
 
 import com.resonant.lib.WrapFunctions
-import WrapFunctions._
+import com.resonant.lib.WrapFunctions._
 import nova.core.block.{Block, BlockFactory}
 import nova.core.entity.{Entity, EntityFactory}
-import nova.core.game.Game
 import nova.core.gui.Gui
 import nova.core.gui.factory.GuiFactory
 import nova.core.item.{Item, ItemFactory}
 import nova.core.loader.Loadable
 import nova.core.render.model.ModelProvider
-import nova.core.render.texture.{EntityTexture, BlockTexture, ItemTexture}
+import nova.core.render.texture.{BlockTexture, EntityTexture, ItemTexture}
+import nova.internal.Game
 
 /**
  * Automatic mffs.content registration for all Blocks, Items, Entities and Textures.
@@ -126,4 +126,5 @@ trait ContentLoader extends Loadable {
 	implicit protected class EntityConstructorWrapper(val wrapped: () => Entity) extends EntityFactory((args: Array[AnyRef]) => wrapped())
 
 	implicit protected class GuiConstructorWrapper(val wrapped: Class[_ <: Gui]) extends GuiFactory((args: Array[AnyRef]) => wrapped.newInstance())
+
 }

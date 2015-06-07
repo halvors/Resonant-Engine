@@ -4,16 +4,16 @@ import java.util.Optional
 
 import com.resonant.core.structure.Structure
 import com.resonant.lib.WrapFunctions
-import WrapFunctions._
-import com.resonant.wrapper.core.{Content, ResonantEngine}
+import com.resonant.lib.WrapFunctions._
+import com.resonant.wrapper.core.Content
 import nova.core.block.Block
 import nova.core.block.Block.RightClickEvent
 import nova.core.block.component.StaticBlockRenderer
 import nova.core.component.Category
 import nova.core.component.transform.Orientation
-import nova.core.game.Game
 import nova.core.network.{Packet, Syncable}
 import nova.core.util.Direction
+import nova.internal.Game
 
 object BlockCreativeBuilder {
 	var schematics: Seq[Structure] = Seq.empty
