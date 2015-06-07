@@ -2,7 +2,7 @@ package com.resonant.core.prefab.itemblock
 
 import com.resonant.lib.WrapFunctions
 import com.resonant.lib.WrapFunctions._
-import com.resonant.wrapper.lib.wrapper.StringWrapper._
+import nova.scala.wrapper.StringWrapper._
 import nova.core.gui.InputManager.Key
 import nova.core.item.Item
 import nova.core.item.Item.TooltipEvent

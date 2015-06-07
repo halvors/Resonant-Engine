@@ -1,4 +1,4 @@
-package com.resonant.wrapper.lib.utility.recipe;
+package com.resonant.wrapper.lib.utility;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

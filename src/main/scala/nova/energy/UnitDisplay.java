@@ -1,4 +1,4 @@
-package com.resonant.wrapper.lib.utility.science;
+package nova.energy;
 
 import java.util.LinkedList;
 import java.util.List;

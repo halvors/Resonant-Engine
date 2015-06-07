@@ -3,10 +3,10 @@ package com.resonant.core.prefab.item
 import com.resonant.core.energy.EnergyItem
 import com.resonant.lib.WrapFunctions
 import WrapFunctions._
-import com.resonant.wrapper.lib.utility.science.UnitDisplay
 import nova.core.item.Item
 import nova.core.item.Item.TooltipEvent
 import nova.core.retention.{Storable, Store}
+import nova.energy.UnitDisplay
 
 /**
  * A trait implementation of IEnergyItem

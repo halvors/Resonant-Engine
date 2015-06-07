@@ -1,4 +1,4 @@
-package com.resonant.wrapper.lib.wrapper
+package nova.scala.wrapper
 
 import java.util.{List => JList}
 

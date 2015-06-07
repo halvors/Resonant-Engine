@@ -1,4 +1,4 @@
-package com.resonant.wrapper.lib.utility.recipe
+package nova.scala
 
 import java.util.{List => JList, Set => JSet}
 

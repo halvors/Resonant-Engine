@@ -6,7 +6,7 @@ import com.resonant.core.prefab.modcontent.ContentLoader
 import com.resonant.core.resources.block.TileOre
 import com.resonant.core.resources.item.ItemIngot
 import com.resonant.wrapper.core.Reference
-import com.resonant.wrapper.lib.wrapper.StringWrapper._
+import nova.scala.wrapper.StringWrapper._
 import nova.core
 import nova.core.block.{Block, BlockFactory}
 import nova.core.item.{Item, ItemFactory}
