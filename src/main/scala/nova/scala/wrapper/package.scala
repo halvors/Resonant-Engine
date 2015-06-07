@@ -1,4 +1,4 @@
-package com.resonant.wrapper.lib
+package nova.scala.wrapper
 
 /**
  * The wrapper package consists of Scala implicit conversions to bridge

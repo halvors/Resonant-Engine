@@ -1,4 +1,4 @@
-package com.resonant.core.resources.block;
+package nova.resources.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;

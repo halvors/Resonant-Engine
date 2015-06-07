@@ -1,17 +1,16 @@
-package com.resonant.core.resources
+package nova.resources
 
 import java.util.function.{Function => JFunction}
 
 import com.resonant.core.prefab.modcontent.ContentLoader
-import com.resonant.core.resources.block.TileOre
-import com.resonant.core.resources.item.ItemIngot
-import com.resonant.wrapper.core.Reference
-import nova.scala.wrapper.StringWrapper._
+import nova.resources.block.TileOre
+import nova.resources.item.ItemIngot
 import nova.core
 import nova.core.block.{Block, BlockFactory}
 import nova.core.item.{Item, ItemFactory}
 import nova.core.render.texture.{BlockTexture, ItemTexture}
 import nova.internal.Game
+import nova.scala.wrapper.StringWrapper._
 
 /**
  * A factor class generates different types of resources based on its material
@@ -20,11 +19,11 @@ import nova.internal.Game
  *
  * @author Calclavia
  */
-object ResourceFactory extends ContentLoader {
+class ResourceFactory(domain: String) extends ContentLoader {
 
-	val oreForeground = new BlockTexture(Reference.id, "oreForeground")
-	val oreBackground = new BlockTexture(Reference.id, "oreBackground")
-	val ingot = new ItemTexture(Reference.id, "ingot")
+	val oreForeground = new BlockTexture(domain, "oreForeground")
+	val oreBackground = new BlockTexture(domain, "oreBackground")
+	val ingot = new ItemTexture(domain, "ingot")
 	/**
 	 * Reference to color of material
 	 */
@@ -35,7 +34,7 @@ object ResourceFactory extends ContentLoader {
 	private var generatedBlocks = Map.empty[(String, String), BlockFactory]
 	private var generatedItems = Map.empty[(String, String), ItemFactory]
 
-	override def id: String = Reference.id
+	override def id: String = domain
 
 	/**
 	 * Materials must be first registered before use

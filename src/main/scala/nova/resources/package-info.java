@@ -6,4 +6,4 @@
  * @author Calclavia
  */
 
-package com.resonant.core.resources;
+package nova.resources;
