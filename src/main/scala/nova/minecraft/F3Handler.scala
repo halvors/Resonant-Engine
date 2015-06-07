@@ -1,6 +1,6 @@
-package com.resonant.wrapper.core.debug
+package nova.minecraft
 
-import com.resonant.wrapper.core.api.tile.DebugInfo
+import DebugInfo
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.{Side, SideOnly}
@@ -11,6 +11,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent
  * A handler that allows GUI display on the F3 GUI
  * @author Calclavia
  */
+//TODO: Move NOVA-Minecraft
 @SideOnly(Side.CLIENT)
 object F3Handler {
 	@SubscribeEvent

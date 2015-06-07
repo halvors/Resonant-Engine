@@ -1,4 +1,4 @@
-package nova.scala
+package nova.scala.util
 
 import java.util.{List => JList, Set => JSet}
 

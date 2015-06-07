@@ -1,10 +1,10 @@
-package nova.scala
+package nova.scala.component
 
 import nova.core.block.Block
 import nova.core.component.Component
 import nova.core.component.transform.Orientation
 import nova.core.event.{Event, EventBus}
-import nova.core.network.{Syncable, Sync}
+import nova.core.network.{Sync, Syncable}
 import nova.core.retention.{Storable, Store}
 import nova.core.util.Direction
 
@@ -13,7 +13,6 @@ import nova.core.util.Direction
  *
  * @author Calclavia
  */
-//TODO: Would this be useful for NOVA?
 class IO(block: Block) extends Component with Storable with Syncable {
 
 	@Store

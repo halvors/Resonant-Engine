@@ -1,4 +1,4 @@
-package nova.scala
+package nova.scala.util
 
 /**
  * An object that can handle ticks.
