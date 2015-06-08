@@ -5,7 +5,7 @@ import java.util
 import nova.core.block.BlockFactory
 import nova.core.retention.{Data, Storable}
 import nova.core.util.math.{MatrixStack, TransformUtil}
-import nova.internal.Game
+import nova.internal.core.Game
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 
 import scala.collection.convert.wrapAll._
