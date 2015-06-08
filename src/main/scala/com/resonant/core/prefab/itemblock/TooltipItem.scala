@@ -1,13 +1,14 @@
 package com.resonant.core.prefab.itemblock
 
-import com.resonant.lib.WrapFunctions
-import com.resonant.lib.WrapFunctions._
+import nova.scala.wrapper.FunctionalWrapper
+import FunctionalWrapper._
 import nova.scala.wrapper.StringWrapper._
 import nova.core.gui.InputManager.Key
 import nova.core.item.Item
 import nova.core.item.Item.TooltipEvent
 import nova.core.render.Color
 import nova.internal.Game
+import nova.scala.wrapper.FunctionalWrapper
 
 /**
  * @author Calclavia

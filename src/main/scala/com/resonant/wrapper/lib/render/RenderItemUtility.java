@@ -18,8 +18,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.ForgeHooksClient;
 import nova.core.util.Direction;
-import nova.core.util.transform.vector.Vector3d;
-import nova.core.util.transform.vector.Vector3i;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.lwjgl.opengl.GL11;
 
 import java.util.EnumSet;
@@ -53,8 +52,8 @@ public class RenderItemUtility {
 
 		for (int i = 0; i < (matrixX * matrixZ); i++) {
 			if (inventory[i] != null) {
-				Vector3d translation = new Vector3d((double) (i / matrixX) / ((double) matrixX) + (0.5 / (matrixX)), 1.1, (double) (i % matrixZ) / ((double) matrixZ) + (0.5 / (matrixZ))).add(-0.5);
-				translation.multiply(0.85);
+				Vector3D translation = new Vector3D((double) (i / matrixX) / ((double) matrixX) + (0.5 / (matrixX)), 1.1, (double) (i % matrixZ) / ((double) matrixZ) + (0.5 / (matrixZ))).add(-0.5);
+				translation.crossProduct(0.85);
 				GL11.glPushMatrix();
 				GL11.glTranslated(x + 0.5f, y + 0.5f, z + 0.5f);
 
@@ -64,15 +63,15 @@ public class RenderItemUtility {
 
 				GL11.glTranslated(0, 0, scale / 6);
 
-				GL11.glTranslated(translation.x, translation.y, translation.z);
+				GL11.glTranslated(translation.getX(), translation.getY(), translation.getZ());
 				GL11.glScalef(scale, scale, scale);
-				renderItem(tileEntity.getWorldObj(), inventory[i], new Vector3d(0, 0, 0), 0, 1);
+				renderItem(tileEntity.getWorldObj(), inventory[i], new Vector3D(0, 0, 0), 0, 1);
 				GL11.glPopMatrix();
 
 				if (isLooking) {
 					GL11.glPushMatrix();
 					GL11.glTranslated(x, y, z);
-					RenderUtility.renderFloatingText("" + inventory[i].stackSize, translation.transform(dir.rotation).add(0.5).add(new Vector3d(0, 0.5, 0)));
+					RenderUtility.renderFloatingText("" + inventory[i].stackSize, translation.transform(dir.rotation).add(0.5).add(new Vector3D(0, 0.5, 0)));
 					GL11.glPopMatrix();
 				}
 			}
@@ -103,7 +102,7 @@ public class RenderItemUtility {
 				renderItemOnSide(world, itemStack, direction, x, y, z, renderText, amount);
 
 				GL11.glPushMatrix();
-				setupLight(world, new Vector3d(x, y, z).toInt(), direction.x, direction.z);
+				setupLight(world, new Vector3D(x, y, z).toInt(), direction.x, direction.z);
 				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 				GL11.glDisable(2896);
 				RenderUtility.renderText(renderText, direction, 0.02f, x, y - 0.35f, z);
@@ -115,7 +114,7 @@ public class RenderItemUtility {
 
 	}
 
-	protected static void renderItemSingleSide(World world, Vector3d position, ItemStack itemStack, Direction direction, String renderText) {
+	protected static void renderItemSingleSide(World world, Vector3D position, ItemStack itemStack, Direction direction, String renderText) {
 		String amount = "";
 
 		if (itemStack != null) {
@@ -123,14 +122,14 @@ public class RenderItemUtility {
 			amount = Integer.toString(itemStack.stackSize);
 		}
 
-		renderItemOnSide(world, itemStack, direction, position.x, position.y, position.z, renderText, amount);
+		renderItemOnSide(world, itemStack, direction, position.getX(), position.getY(), position.getZ(), renderText, amount);
 
 		GL11.glPushMatrix();
 		setupLight(world, position.toInt(), direction.x, direction.z);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 		GL11.glDisable(2896);
-		RenderUtility.renderText(renderText, direction, 0.02f, position.x, position.y - 0.35f, position.z);
-		RenderUtility.renderText(amount, direction, 0.02f, position.x, position.y - 0.15f, position.z);
+		RenderUtility.renderText(renderText, direction, 0.02f, position.getX(), position.getY() - 0.35f, position.getZ());
+		RenderUtility.renderText(amount, direction, 0.02f, position.getX(), position.getY() - 0.15f, position.getZ());
 		GL11.glEnable(2896);
 		GL11.glPopMatrix();
 
@@ -175,7 +174,7 @@ public class RenderItemUtility {
 
 			TextureManager renderEngine = Minecraft.getMinecraft().renderEngine;
 
-			setupLight(world, new Vector3d(x, y, z).toInt(), direction.x, direction.z);
+			setupLight(world, new Vector3D(x, y, z).toInt(), direction.x, direction.z);
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 			GL11.glDisable(2896);
 
@@ -188,17 +187,17 @@ public class RenderItemUtility {
 		}
 	}
 
-	private static void setupLight(World world, Vector3i pos, int xDifference, int zDifference) {
-		int br = world.getLightBrightnessForSkyBlocks(pos.x + xDifference, pos.y, pos.z + zDifference, 0);
+	private static void setupLight(World world, Vector3D pos, int xDifference, int zDifference) {
+		int br = world.getLightBrightnessForSkyBlocks(pos.getX() + xDifference, pos.getY(), pos.getZ() + zDifference, 0);
 		int var11 = br % 65536;
 		int var12 = br / 65536;
 		float scale = 1;
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, var11 * scale, var12 * scale);
 	}
 
-	public static void renderItem(World world, ItemStack itemStack, Vector3d position, float rotationYaw, int angle) {
+	public static void renderItem(World world, ItemStack itemStack, Vector3D position, float rotationYaw, int angle) {
 		if (itemStack != null) {
-			EntityItem entityItem = new EntityItem(world, position.x, position.y, position.z, itemStack.copy());
+			EntityItem entityItem = new EntityItem(world, position.getX(), position.getY(), position.getZ(), itemStack.copy());
 			entityItem.getEntityItem().stackSize = 1;
 			entityItem.hoverStart = 0.0F;
 			GL11.glPushMatrix();

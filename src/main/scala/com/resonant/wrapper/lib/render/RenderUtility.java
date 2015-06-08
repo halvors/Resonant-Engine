@@ -17,7 +17,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import nova.core.util.Direction;
 import nova.core.util.collection.Tuple2;
-import nova.core.util.transform.vector.Vector3d;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
@@ -162,7 +162,7 @@ public class RenderUtility {
 		glTranslatef(0.5F, 0.5F, 0.5F);
 	}
 
-	public static void renderFloatingText(String text, Vector3d position) {
+	public static void renderFloatingText(String text, Vector3D position) {
 		renderFloatingText(text, position, 0xFFFFFF);
 	}
 
@@ -171,8 +171,8 @@ public class RenderUtility {
 	 *
 	 * @author Briman0094
 	 */
-	public static void renderFloatingText(String text, Vector3d position, int color) {
-		renderFloatingText(text, position.x, position.y, position.z, color);
+	public static void renderFloatingText(String text, Vector3D position, int color) {
+		renderFloatingText(text, position.getX(), position.getY(), position.getZ(), color);
 	}
 
 	public static void renderFloatingText(String text, double x, double y, double z, int color) {
@@ -630,8 +630,8 @@ public class RenderUtility {
 	public static void rotateBlockBasedOnDirection(Direction direction) {
 		switch (direction) {
 			default:
-				Tuple2<Vector3d, Double> angleAxis = direction.rotation.toAngleAxis();
-				glRotated(Math.toDegrees(angleAxis._2), angleAxis._1.x, angleAxis._1.y, angleAxis._1.z);
+				Tuple2<Vector3D, Double> angleAxis = direction.rotation.toAngleAxis();
+				glRotated(Math.toDegrees(angleAxis._2), angleAxis._1.getX(), angleAxis._1.getY(), angleAxis._1.getZ());
 				break;
 			case DOWN:
 				glRotatef(90, 1, 0, 0);
@@ -642,7 +642,7 @@ public class RenderUtility {
 		}
 	}
 
-	public void renderTags(Vector3d coord, HashMap<String, Integer> tags, float height) {
+	public void renderTags(Vector3D coord, HashMap<String, Integer> tags, float height) {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
 		if (player.ridingEntity == null) {
@@ -652,7 +652,7 @@ public class RenderUtility {
 				boolean isLooking = false;
 
 				for (int h = 0; h < height; h++) {
-					if (objectPosition.blockX == coord.xi() && objectPosition.blockY == coord.yi() + h && objectPosition.blockZ == coord.yi()) {
+					if (objectPosition.blockX == coord.getX() && objectPosition.blockY == coord.getY() + h && objectPosition.blockZ == coord.getY()) {
 						isLooking = true;
 					}
 				}
@@ -665,7 +665,7 @@ public class RenderUtility {
 						Map.Entry<String, Integer> entry = it.next();
 
 						if (entry.getKey() != null) {
-							renderFloatingText(entry.getKey(), new Vector3d(0.5, i * 0.25f + height, 0.5f), entry.getValue());
+							renderFloatingText(entry.getKey(), new Vector3D(0.5, i * 0.25f + height, 0.5f), entry.getValue());
 						}
 
 						i++;

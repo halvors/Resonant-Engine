@@ -3,7 +3,7 @@ package com.resonant.core.prefab.block.multiblock;
 import nova.core.block.Block;
 import nova.core.retention.Data;
 import nova.core.retention.Storable;
-import nova.core.util.transform.vector.Vector3i;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedHashSet;
@@ -26,7 +26,7 @@ public class MultiBlockHandler<W extends IMultiBlockStructure> implements Storab
 	/**
 	 * The relative primary block position to be loaded in once the block is initiated.
 	 */
-	protected Vector3i newPrimary = null;
+	protected Vector3D newPrimary = null;
 	protected Class<? extends W> wrapperClass;
 
 	public MultiBlockHandler(W wrapper) {
@@ -68,9 +68,9 @@ public class MultiBlockHandler<W extends IMultiBlockStructure> implements Storab
 	 */
 	public Set<W> getStructure() {
 		Set<W> structure = new LinkedHashSet<>();
-		Iterable<Vector3i> vectors = block.getMultiBlockVectors();
+		Iterable<Vector3D> vectors = block.getMultiBlockVectors();
 
-		for (Vector3i vector : vectors) {
+		for (Vector3D vector : vectors) {
 			W checkWrapper = getWrapperAt(vector.add(block.position()));
 
 			if (checkWrapper != null) {
@@ -139,7 +139,7 @@ public class MultiBlockHandler<W extends IMultiBlockStructure> implements Storab
 		return false;
 	}
 
-	public W getWrapperAt(Vector3i position) {
+	public W getWrapperAt(Vector3D position) {
 		Optional<Block> block = this.block.world().getBlock(position);
 
 		if (block.isPresent() && wrapperClass.isAssignableFrom(block.get().getClass())) {
@@ -178,7 +178,7 @@ public class MultiBlockHandler<W extends IMultiBlockStructure> implements Storab
 	@Override
 	public void load(Data data) {
 		if (data.containsKey("primaryMultiBlock")) {
-			Vector3i zero = Vector3i.zero;
+			Vector3D zero = Vector3D.ZERO;
 			zero.load(data.get("primaryMultiBlock"));
 			newPrimary = zero;
 		} else {

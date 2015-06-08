@@ -1,6 +1,6 @@
 package com.resonant.core.prefab.block.multiblock;
 
-import nova.core.util.transform.vector.Vector3i;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 /**
  * Interface to be applied to block entity blocks that occupies more than one block space. Useful for
@@ -12,5 +12,5 @@ public interface IMultiBlock {
 	/**
 	 * @return An array of Vector3d containing the multiblock relative coordinates to be constructed.
 	 */
-	public Iterable<Vector3i> getMultiBlockVectors();
+	public Iterable<Vector3D> getMultiBlockVectors();
 }

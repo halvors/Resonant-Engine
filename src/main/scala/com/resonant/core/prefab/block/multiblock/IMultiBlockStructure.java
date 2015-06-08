@@ -1,6 +1,6 @@
 package com.resonant.core.prefab.block.multiblock;
 
-import nova.core.util.transform.vector.Vector3i;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import nova.core.world.World;
 
 public interface IMultiBlockStructure<W extends IMultiBlockStructure> extends IMultiBlock {
@@ -8,7 +8,7 @@ public interface IMultiBlockStructure<W extends IMultiBlockStructure> extends IM
 
 	public void onMultiBlockChanged();
 
-	public Vector3i position();
+	public Vector3D position();
 
 	public MultiBlockHandler<W> getMultiBlock();
 }

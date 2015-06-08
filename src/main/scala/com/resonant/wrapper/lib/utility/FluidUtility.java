@@ -6,7 +6,7 @@ import nova.core.fluid.FluidBlock;
 import nova.core.fluid.SidedTankProvider;
 import nova.core.fluid.component.Tank;
 import nova.core.util.Direction;
-import nova.core.util.transform.vector.Vector3i;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import nova.core.world.World;
 
 import java.util.Collections;
@@ -20,12 +20,12 @@ import java.util.Set;
  */
 public class FluidUtility {
 
-	public static int getFluidAmountFromBlock(World world, Vector3i vector) {
+	public static int getFluidAmountFromBlock(World world, Vector3D vector) {
 		Optional<Fluid> fluid = getFluidFromBlock(world, vector);
 		return fluid.isPresent() ? fluid.get().amount() : 0;
 	}
 
-	public static Optional<Fluid> getFluidFromBlock(World world, Vector3i pos) {
+	public static Optional<Fluid> getFluidFromBlock(World world, Vector3D pos) {
 		Optional<Block> block = world.getBlock(pos);
 
 		if (block.isPresent() && block.get() instanceof FluidBlock) {
@@ -35,7 +35,7 @@ public class FluidUtility {
 		return Optional.empty();
 	}
 
-	public static Set<Tank> getTank(World world, Vector3i pos, Direction from) {
+	public static Set<Tank> getTank(World world, Vector3D pos, Direction from) {
 		Optional<Block> block = world.getBlock(pos);
 
 		if (block.isPresent() && block.get() instanceof SidedTankProvider) {
@@ -64,11 +64,11 @@ public class FluidUtility {
 		return 0;
 	}
 
-	public static double getAverageFilledPercentage(World world, Vector3i pos, Direction... sides) {
+	public static double getAverageFilledPercentage(World world, Vector3D pos, Direction... sides) {
 		return getAverageFilledPercentage(world, pos, null, 0, sides);
 	}
 
-	public static double getAverageFilledPercentage(World world, Vector3i pos, Class classMask, double defaultFill, Direction... sides) {
+	public static double getAverageFilledPercentage(World world, Vector3D pos, Class classMask, double defaultFill, Direction... sides) {
 		double fullness = defaultFill;
 		int count = 1;
 
@@ -93,7 +93,7 @@ public class FluidUtility {
 	 * @param doDrain - do the action
 	 * @return Fluid drained from the block
 	 */
-	public static Optional<Fluid> drainBlock(World world, Vector3i pos, boolean doDrain) {
+	public static Optional<Fluid> drainBlock(World world, Vector3D pos, boolean doDrain) {
 		Optional<Block> block = world.getBlock(pos);
 
 		if (block.isPresent() && block.get() instanceof FluidBlock) {
@@ -107,7 +107,7 @@ public class FluidUtility {
 	 * Fills a position in the world with a specific fluid.
 	 * @return The amount of fluid used.
 	 */
-	public static int fillBlock(World world, Vector3i pos, Fluid fluid, boolean doFill) {
+	public static int fillBlock(World world, Vector3D pos, Fluid fluid, boolean doFill) {
 		if (fluid.amount() >= Fluid.bucketVolume && fluid.getBlockFactory().isPresent()) {
 			Optional<Block> block = world.getBlock(pos);
 			if (!block.isPresent()) {

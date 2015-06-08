@@ -2,7 +2,7 @@ package com.resonant.lib
 
 import nova.core.block.Block
 import nova.core.retention.Data
-import nova.core.util.transform.vector.Vector3i
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 import nova.core.world.World
 
 /**
@@ -16,5 +16,5 @@ abstract class MovementManager {
 	 * @param pos
 	 * @param data Optionally, data can be injected into the block.
 	 */
-	def setSneaky(world: World, pos: Vector3i, block: Block, data: Data = null)
+	def setSneaky(world: World, pos: Vector3D, block: Block, data: Data = null)
 }

@@ -5,13 +5,14 @@ import java.util.Optional
 import com.sun.prism.ResourceFactory
 import nova.resources.ResourceFactory
 import nova.resources.{Resource, ResourceFactory}
-import com.resonant.lib.WrapFunctions
-import WrapFunctions._
+import nova.scala.wrapper.FunctionalWrapper
+import FunctionalWrapper._
 import nova.core.block.Block
 import nova.core.block.component.StaticBlockRenderer
 import nova.core.render.Color
 import nova.core.render.model.{BlockModelUtil, Model}
 import nova.core.util.Direction
+import nova.scala.wrapper.FunctionalWrapper
 
 /**
  * A generic ore block that is automatically colored/textured based on a color multiplier.

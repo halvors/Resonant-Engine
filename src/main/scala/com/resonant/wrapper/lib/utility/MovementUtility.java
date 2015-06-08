@@ -6,7 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
-import nova.core.util.transform.vector.Vector3d;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import java.lang.reflect.Method;
 
@@ -71,41 +71,41 @@ public class MovementUtility {
 	/**
 	 * Sets a block in a sneaky way to bypass some restraints.
 	 */
-	public static void setBlockSneaky(World world, Vector3d position, Block block, int metadata, TileEntity tileEntity) {
+	public static void setBlockSneaky(World world, Vector3D position, Block block, int metadata, TileEntity tileEntity) {
 		if (block != null && world != null) {
-			Chunk chunk = world.getChunkFromChunkCoords(position.xi() >> 4, position.zi() >> 4);
-			Vector3d chunkPosition = new Vector3d(position.xi() & 0xF, position.yi() & 0xF, position.zi() & 0xF);
+			Chunk chunk = world.getChunkFromChunkCoords(position.getX() >> 4, position.getZ() >> 4);
+			Vector3D chunkPosition = new Vector3D(position.getX() & 0xF, position.getY() & 0xF, position.getZ() & 0xF);
 
-			int heightMapIndex = chunkPosition.zi() << 4 | chunkPosition.xi();
+			int heightMapIndex = chunkPosition.getZ() << 4 | chunkPosition.getX();
 
-			if (position.yi() >= chunk.precipitationHeightMap[heightMapIndex] - 1) {
+			if (position.getY() >= chunk.precipitationHeightMap[heightMapIndex] - 1) {
 				chunk.precipitationHeightMap[heightMapIndex] = -999;
 			}
 
 			int heightMapValue = chunk.heightMap[heightMapIndex];
 
-			world.removeTileEntity(position.xi(), position.yi(), position.zi());
+			world.removeTileEntity(position.getX(), position.getY(), position.getZ());
 
-			ExtendedBlockStorage extendedBlockStorage = chunk.getBlockStorageArray()[position.yi() >> 4];
+			ExtendedBlockStorage extendedBlockStorage = chunk.getBlockStorageArray()[position.getY() >> 4];
 
 			if (extendedBlockStorage == null) {
-				extendedBlockStorage = new ExtendedBlockStorage((position.yi() >> 4) << 4, !world.provider.hasNoSky);
+				extendedBlockStorage = new ExtendedBlockStorage((position.getY() >> 4) << 4, !world.provider.hasNoSky);
 
-				chunk.getBlockStorageArray()[position.yi() >> 4] = extendedBlockStorage;
+				chunk.getBlockStorageArray()[position.getY() >> 4] = extendedBlockStorage;
 			}
 
-			extendedBlockStorage.func_150818_a(chunkPosition.xi(), chunkPosition.yi(), chunkPosition.zi(), block);
-			extendedBlockStorage.setExtBlockMetadata(chunkPosition.xi(), chunkPosition.yi(), chunkPosition.zi(), metadata);
+			extendedBlockStorage.func_150818_a(chunkPosition.getX(), chunkPosition.getY(), chunkPosition.getZ(), block);
+			extendedBlockStorage.setExtBlockMetadata(chunkPosition.getX(), chunkPosition.getY(), chunkPosition.getZ(), metadata);
 
-			if (position.yi() >= heightMapValue) {
+			if (position.getY() >= heightMapValue) {
 				chunk.generateSkylightMap();
 			} else {
 				//chunk.getBlockLightOpacity(chunkPosition.xi(), position.yi(), chunkPosition.zi())
-				if (chunk.getBlockLightValue(chunkPosition.xi(), position.yi(), chunkPosition.zi(), 0) > 0) {
-					if (position.yi() >= heightMapValue) {
-						relightBlock(chunk, chunkPosition.add(new Vector3d(0, 1, 0)));
+				if (chunk.getBlockLightValue(chunkPosition.getX(), position.getY(), chunkPosition.getZ(), 0) > 0) {
+					if (position.getY() >= heightMapValue) {
+						relightBlock(chunk, chunkPosition.add(new Vector3D(0, 1, 0)));
 					}
-				} else if (position.yi() == heightMapValue - 1) {
+				} else if (position.getY() == heightMapValue - 1) {
 					relightBlock(chunk, chunkPosition);
 				}
 
@@ -114,13 +114,13 @@ public class MovementUtility {
 
 			chunk.isModified = true;
 			//updateAllLightTypes
-			world.func_147451_t(position.xi(), position.yi(), position.zi());
+			world.func_147451_t(position.getX(), position.getY(), position.getZ());
 
 			if (tileEntity != null) {
-				world.setTileEntity(position.xi(), position.yi(), position.zi(), tileEntity);
+				world.setTileEntity(position.getX(), position.getY(), position.getZ(), tileEntity);
 			}
 
-			world.markBlockForUpdate(position.xi(), position.yi(), position.zi());
+			world.markBlockForUpdate(position.getX(), position.getY(), position.getZ());
 		}
 	}
 
@@ -129,10 +129,10 @@ public class MovementUtility {
 	 * @param chunk
 	 * @param position
 	 */
-	public static void relightBlock(Chunk chunk, Vector3d position) {
+	public static void relightBlock(Chunk chunk, Vector3D position) {
 		try {
 			Method m = ReflectionHelper.findMethod(Chunk.class, null, CHUNK_RELIGHT_BLOCK, int.class, int.class, int.class);
-			m.invoke(chunk, position.xi(), position.yi(), position.zi());
+			m.invoke(chunk, position.getX(), position.getY(), position.getZ());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -143,10 +143,10 @@ public class MovementUtility {
 	 * @param chunk
 	 * @param position
 	 */
-	public static void propagateSkylightOcclusion(Chunk chunk, Vector3d position) {
+	public static void propagateSkylightOcclusion(Chunk chunk, Vector3D position) {
 		try {
 			Method m = ReflectionHelper.findMethod(Chunk.class, null, CHUNK_PROPOGATE_SKY_LIGHT_OCCLUSION, int.class, int.class);
-			m.invoke(chunk, position.xi(), position.zi());
+			m.invoke(chunk, position.getX(), position.getZ());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
