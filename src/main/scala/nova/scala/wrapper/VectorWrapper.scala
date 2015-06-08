@@ -45,6 +45,8 @@ object VectorWrapper {
 
 		def *(other: Vector3D) = Vector3DUtil.cartesianProduct(underlying, other)
 
+		def /(other: Double) = underlying.scalarMultiply(1d / other)
+
 		def /(other: Vector3D) = Vector3DUtil.cartesianProduct(underlying, other.reciprocal)
 	}
 
