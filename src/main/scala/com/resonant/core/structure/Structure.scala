@@ -5,16 +5,14 @@ import java.util.Optional
 import com.google.common.math.DoubleMath
 import nova.core.block.BlockFactory
 import nova.core.util.Identifiable
-import nova.core.util.math.{MatrixStack, Vector3DUtil}
-
-org.apache.commons.math3.geometry.euclidean.threed.Rotation
+import nova.core.util.math.{MatrixStack, TransformUtil, Vector3DUtil}
 import nova.scala.wrapper.VectorWrapper._
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
+import org.apache.commons.math3.geometry.euclidean.threed.{Rotation, Vector3D}
+import org.apache.commons.math3.linear.LUDecomposition
 
 import scala.beans.BeanProperty
 import scala.collection.parallel
 import scala.collection.parallel.ParSet
-
 /**
  * Defines a 3D structure.
  * @author Calclavia
@@ -73,7 +71,7 @@ abstract class Structure extends Identifiable {
 
 	protected def getStructure(equation: (Vector3D) => Double): Set[Vector3D] = {
 		//TODO: Use negate matrix
-		val transformMatrix = new MatrixStack().rotate(rotation).scale(scale).getMatrix.reciprocal()
+		val transformMatrix = new LUDecomposition(new MatrixStack().rotate(rotation).scale(scale).getMatrix).getSolver.getInverse
 
 		/**
 		 * The equation has default transformations.
@@ -81,7 +79,7 @@ abstract class Structure extends Identifiable {
 		 */
 		val structure = searchSpace
 			.collect(preMapper)
-			.filter(v => DoubleMath.fuzzyEquals(equation(v.transform(transformMatrix)), 0, error))
+			.filter(v => DoubleMath.fuzzyEquals(equation(TransformUtil.transform(v, transformMatrix)), 0, error))
 			.map(_ + translate)
 			.collect(postMapper)
 			.seq
@@ -105,7 +103,7 @@ abstract class Structure extends Identifiable {
 	def intersects(position: Vector3D): Boolean = {
 		//TODO: Use negate matrix
 		val rotationMatrix = new MatrixStack().rotate(rotation).getMatrix
-		return DoubleMath.fuzzyEquals(volumeEquation((position - translate).transform(rotationMatrix).divide(scale)), 0, error)
+		return DoubleMath.fuzzyEquals(volumeEquation(TransformUtil.transform(position - translate, rotationMatrix) / scale), 0, error)
 	}
 
 	/**

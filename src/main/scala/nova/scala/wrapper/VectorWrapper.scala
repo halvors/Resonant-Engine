@@ -39,7 +39,13 @@ object VectorWrapper {
 
 		def unary_/(other: Double) = Vector3DUtil.reciprocal(underlying).scalarMultiply(other)
 
+		def reciprocal = Vector3DUtil.reciprocal(underlying)
+
 		def *(other: Double) = underlying.scalarMultiply(other)
+
+		def *(other: Vector3D) = Vector3DUtil.cartesianProduct(underlying, other)
+
+		def /(other: Vector3D) = Vector3DUtil.cartesianProduct(underlying, other.reciprocal)
 	}
 
 }

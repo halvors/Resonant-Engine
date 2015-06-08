@@ -4,7 +4,7 @@ import java.util
 
 import nova.core.block.BlockFactory
 import nova.core.retention.{Data, Storable}
-import nova.core.util.math.MatrixStack
+import nova.core.util.math.{MatrixStack, TransformUtil}
 import nova.internal.Game
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 
@@ -29,7 +29,7 @@ class StructureCustom(val name: String) extends Structure with Storable {
 		val matrix = new MatrixStack().translate(translate).scale(scale).rotate(rotation).getMatrix
 		return structure
 			.filter(kv => Game.blocks.get(kv._2).isPresent)
-			.map(e => (e._1.transform(matrix), Game.blocks.getFactory(e._2).get()))
+			.map(e => (TransformUtil.transform(e._1, matrix), Game.blocks.getFactory(e._2).get()))
 	}
 
 	override def load(data: Data) {
