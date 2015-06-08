@@ -4,7 +4,7 @@ import java.util
 
 import nova.core.block.BlockFactory
 import nova.core.retention.{Data, Storable}
-import nova.core.util.transform.matrix.MatrixStack
+import nova.core.util.math.MatrixStack
 import nova.internal.Game
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 

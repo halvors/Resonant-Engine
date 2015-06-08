@@ -5,8 +5,8 @@ import java.util.Optional
 import com.google.common.math.DoubleMath
 import nova.core.block.BlockFactory
 import nova.core.util.Identifiable
-import nova.core.util.math.VectorUtil
-import nova.core.util.transform.matrix.{MatrixStack, Quaternion}
+import nova.core.util.math.{MatrixStack, VectorUtil}
+import nova.core.util.transform.matrix.Rotation
 import nova.scala.wrapper.VectorWrapper._
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 
@@ -30,7 +30,7 @@ abstract class Structure extends Identifiable {
 	@BeanProperty
 	var scale = VectorUtil.ONE
 	@BeanProperty
-	var rotation = Quaternion.identity
+	var rotation = Rotation.identity
 	@BeanProperty
 	var blockFactory = Optional.empty[BlockFactory]()
 	/**
