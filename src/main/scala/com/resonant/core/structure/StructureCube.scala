@@ -1,6 +1,6 @@
 package com.resonant.core.structure
 
-import nova.core.util.transform.shape.Cuboid
+import nova.core.util.shape.Cuboid
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 
 /**

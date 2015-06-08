@@ -100,7 +100,7 @@ public class MovementUtility {
 			if (position.getY() >= heightMapValue) {
 				chunk.generateSkylightMap();
 			} else {
-				//chunk.getBlockLightOpacity(chunkPosition.xi(), position.yi(), chunkPosition.zi())
+				//chunk.getBlockLightOpacity(chunkPosition.getX(), position.getY(), chunkPosition.zi())
 				if (chunk.getBlockLightValue(chunkPosition.getX(), position.getY(), chunkPosition.getZ(), 0) > 0) {
 					if (position.getY() >= heightMapValue) {
 						relightBlock(chunk, chunkPosition.add(new Vector3D(0, 1, 0)));

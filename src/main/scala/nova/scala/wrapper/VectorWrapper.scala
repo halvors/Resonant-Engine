@@ -1,6 +1,6 @@
 package nova.scala.wrapper
 
-import nova.core.util.math.VectorUtil
+import nova.core.util.math.Vector3DUtil
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 
 /**
@@ -29,15 +29,15 @@ object VectorWrapper {
 
 		def +(other: Vector3D) = underlying.add(other)
 
-		def +(other: Double) = underlying.add(VectorUtil.ONE * other)
+		def +(other: Double) = underlying.add(Vector3DUtil.ONE * other)
 
 		def -(other: Vector3D) = underlying.subtract(other)
 
-		def -(other: Double) = underlying.subtract(VectorUtil.ONE * other)
+		def -(other: Double) = underlying.subtract(Vector3DUtil.ONE * other)
 
 		def unary_- = underlying.negate()
 
-		def unary_/(other: Double) = VectorUtil.reciprocal(underlying).scalarMultiply(other)
+		def unary_/(other: Double) = Vector3DUtil.reciprocal(underlying).scalarMultiply(other)
 
 		def *(other: Double) = underlying.scalarMultiply(other)
 	}
