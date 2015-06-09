@@ -2,8 +2,6 @@ package com.resonant.core.prefab.modcontent
 
 import java.util.function.{Function => JFunction}
 
-import com.resonant.lib.WrapFunctions
-import com.resonant.lib.WrapFunctions._
 import nova.core.block.{Block, BlockFactory}
 import nova.core.entity.{Entity, EntityFactory}
 import nova.core.gui.Gui
@@ -12,7 +10,9 @@ import nova.core.item.{Item, ItemFactory}
 import nova.core.loader.Loadable
 import nova.core.render.model.ModelProvider
 import nova.core.render.texture.{BlockTexture, EntityTexture, ItemTexture}
-import nova.internal.Game
+import nova.internal.core.Game
+import nova.scala.wrapper.FunctionalWrapper
+import nova.scala.wrapper.FunctionalWrapper._
 
 /**
  * Automatic mffs.content registration for all Blocks, Items, Entities and Textures.
