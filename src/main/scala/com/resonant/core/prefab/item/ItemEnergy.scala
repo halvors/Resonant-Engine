@@ -4,7 +4,6 @@ import nova.core.item.Item
 import nova.core.item.Item.TooltipEvent
 import nova.core.retention.{Storable, Store}
 import nova.energy.{EnergyItem, UnitDisplay}
-import nova.scala.wrapper.FunctionalWrapper
 import nova.scala.wrapper.FunctionalWrapper._
 
 /**
@@ -19,7 +18,7 @@ trait ItemEnergy extends Item with EnergyItem with Storable {
 	@Store
 	protected var energy = 0d
 
-	tooltipEvent.add(eventListener((evt: TooltipEvent) => {
+	events.add(eventListener((evt: TooltipEvent) => {
 		val color = {
 			if (energy <= maxEnergy / 3) {
 				"\u00a74"
@@ -33,7 +32,7 @@ trait ItemEnergy extends Item with EnergyItem with Storable {
 		}
 
 		evt.tooltips.add(color + new UnitDisplay(UnitDisplay.Unit.JOULES, energy) + "/" + new UnitDisplay(UnitDisplay.Unit.JOULES, maxEnergy).symbol)
-	}))
+	}), classOf[TooltipEvent])
 
 	override def getMaxCount: Int = 1
 
