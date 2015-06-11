@@ -1,4 +1,4 @@
-package com.resonant.core.energy;
+package nova.energy;
 
 /**
  * An interface for items that store energy in joules.

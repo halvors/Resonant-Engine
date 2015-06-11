@@ -2,7 +2,6 @@ package nova.resources
 
 import java.util.function.{Function => JFunction}
 
-import com.resonant.core.prefab.modcontent.ContentLoader
 import nova.core
 import nova.core.block.{Block, BlockFactory}
 import nova.core.item.{Item, ItemFactory}
@@ -10,6 +9,7 @@ import nova.core.render.texture.{BlockTexture, ItemTexture}
 import nova.internal.core.Game
 import nova.resources.block.TileOre
 import nova.resources.item.ItemIngot
+import nova.scala.modcontent.ContentLoader
 import nova.scala.wrapper.StringWrapper._
 
 /**

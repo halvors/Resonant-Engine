@@ -1,13 +1,11 @@
 package com.resonant.core.prefab.item
 
-import com.resonant.core.energy.EnergyItem
-import nova.scala.wrapper.FunctionalWrapper
-import FunctionalWrapper._
 import nova.core.item.Item
 import nova.core.item.Item.TooltipEvent
 import nova.core.retention.{Storable, Store}
-import nova.energy.UnitDisplay
+import nova.energy.{EnergyItem, UnitDisplay}
 import nova.scala.wrapper.FunctionalWrapper
+import nova.scala.wrapper.FunctionalWrapper._
 
 /**
  * A trait implementation of IEnergyItem

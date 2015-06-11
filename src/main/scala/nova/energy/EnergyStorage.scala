@@ -1,4 +1,4 @@
-package com.resonant.core.energy
+package nova.energy
 
 import nova.core.component.Component
 
